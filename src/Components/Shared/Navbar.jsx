@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { HiOutlineLogin } from "react-icons/hi";
 import { FiLogOut } from "react-icons/fi";
@@ -6,27 +6,54 @@ import dummy from "../../assets/dummy.png";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Context/AuthContext";
 import ThemeToggle from "../../Theme/ThemeToggle/ThemeToggle";
+import { FaSearch } from "react-icons/fa";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [hide, setHide] = useState(false);
+  const [lastScroll, setLastScroll] = useState(0);
   // auth context
   const { user, setUser, signOutUser, loading } = useContext(AuthContext);
 
+  // manage nav visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      if (current <= 0) {
+        setHide(false);
+        setLastScroll(current);
+        return;
+      }
+
+      if (current > lastScroll) {
+        setHide(true);
+      } else {
+        setHide(false);
+      }
+      setLastScroll(current);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScroll]);
   // Nav links
   const links = (
     <>
       <NavLink to="/" className="mr-5">
         Home
       </NavLink>
-      <NavLink to="/movies" className="mr-5">
-        All Movies
+      <NavLink to="/clubs" className="mr-5">
+        Clubs
       </NavLink>
-      <NavLink
-        to="/collection"
+      <NavLink to="/events" className="mr-5">
+        Events
+      </NavLink>
+      {/* <NavLink
+        to="/events"
         className={`mr-5  ${user ? "block" : "hidden"}`}
       >
-        My Collection
-      </NavLink>
+        Events
+      </NavLink> */}
     </>
   );
 
@@ -44,13 +71,16 @@ const NavBar = () => {
   };
 
   return (
-    <div className="bg-black/10 backdrop-blur-sm shadow-sm">
+    <div
+      className={`z-100 bg-base-200 rounded-xl my-5 sticky top-0 shadow-sm transform transition-transform duration-300 ${
+        hide ? "-translate-y-full" : "translate-y-1"
+      }`}
+    >
       <div className="navbar container mx-auto">
-        <div className="navbar-start">
+        <div className="navbar-start lg:w-fit mx-6">
           <div className="drawer md:hidden">
             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
-
               <label htmlFor="my-drawer-1" className=" drawer-button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,18 +112,32 @@ const NavBar = () => {
             </div>
           </div>
 
-          <h2 className=" text-xl">
-            <Link to={"/"}>MovieMaster</Link>
+          <h2 className=" text-xl goth">
+            <Link to={"/"}>ClubSphere</Link>
           </h2>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+        <div className="navbar-start hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 ">{links}</ul>
         </div>
+
         <div className="navbar-end">
+        {/* search field */}
+
+        <div className=" flex">
+          <div>
+            <label className="input join-item">
+              
+              <input placeholder="search for clubs" required />
+            </label>
+          </div>
+          <button className="btn btn-primary join-item"><FaSearch size={17} /></button>
+        </div>
+          <ThemeToggle></ThemeToggle>
+
           {loading ? (
             <h1>loading....</h1>
           ) : (
-            <div className="dropdown dropdown-end md:dropdown-center">
+            <div className="dropdown dropdown-end ml-3 cursor-pointer">
               <img
                 tabIndex={0}
                 role="button"
@@ -106,7 +150,7 @@ const NavBar = () => {
               />
               <ul
                 tabIndex="-1"
-                className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                className="dropdown-content menu bg-base-200 rounded-box z-1 w-52 p-2 shadow-sm"
               >
                 <li>
                   <button className="btn md:hidden" onClick={handleSignout}>
@@ -127,31 +171,26 @@ const NavBar = () => {
                 <li>
                   <Link to={"/watchlist"}>WatchList</Link>
                 </li>
+                <li>
+                  <button className="btns" onClick={handleSignout}>
+                    <Link to={"/login"}>
+                      <div className="flex  gap-2 items-center">
+                        <span>Log Out</span>
+                        <FiLogOut />
+                      </div>
+                    </Link>
+                  </button>
+                </li>
               </ul>
               {/* {console.log(user.photoURL)} */}
             </div>
           )}
-
-          {user ? (
-            <button className="btn hidden md:block" onClick={handleSignout}>
-              <Link to={"/login"}>
-                <div className="flex  gap-2 items-center">
-                  <span>Log Out</span>
-                  <FiLogOut />
-                </div>
-              </Link>
-            </button>
-          ) : (
-            <button className="btn">
-              <Link to={"/login"}>
-                <div className="flex  gap-2 items-center">
-                  <span>Login</span>
-                  <HiOutlineLogin />
-                </div>
-              </Link>
-            </button>
-          )}
-          <ThemeToggle></ThemeToggle>
+          <Link  to={"/login"} className={`btns ${user ? "hidden!" : ""}`}>
+              <div className="flex  gap-2 items-center">
+                <span>Login</span>
+                <HiOutlineLogin />
+              </div>
+          </Link>
         </div>
       </div>
     </div>

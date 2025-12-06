@@ -6,6 +6,7 @@ import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Firebase/sdk";
+import { useForm } from "react-hook-form";
 // import bg from '../assets/SimpleShiny.svg';
 
 // console.log(bg);
@@ -18,11 +19,21 @@ const Login = () => {
   const from = location.state || "/";
   const navigate = useNavigate();
 
+  // hook form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+
   // sign in with email and pass
-  const handleSignin = (e) => {
-    e.preventDefault();
-    const email = e.target.email?.value;
-    const password = e.target.password?.value;
+  const handleSignin = (data) => {
+    const email = data?.email
+    const password = data?.password
+
+    // console.log(email, password)
+
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         // console.log(res);
@@ -53,25 +64,33 @@ const Login = () => {
           <h1 className="heading">Login</h1>
         </div>
         <form
-          onSubmit={handleSignin}
+          onSubmit={handleSubmit(handleSignin)}
           className="fieldset rounded-box w-xs border border-gray-600 p-4 bg-black/10 backdrop-blur-sm shadow-sm"
         >
           <label className="label text-white">Email</label>
           <input
             type="email"
             className="input"
-            name="email"
+            {...register("email", { required: "Email in required" })}
             placeholder="Email"
           />
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
 
           <div className="relative">
             <label className="label text-white">Password</label>
             <input
               type={showPass ? "text" : "password"}
               className="input"
-              name="password"
+              {...register("password", { required: "Password in required" })}
               placeholder="Password"
             />
+            {errors.email && (
+              <span className="text-red-500 text-sm">
+                {errors.password?.message}
+              </span>
+            )}
             <span
               onClick={() => setShowPass(!showPass)}
               className="absolute right-2 top-9 cursor-pointer z-50"

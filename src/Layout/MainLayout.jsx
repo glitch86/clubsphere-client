@@ -7,8 +7,8 @@ import MyContainer from "../Components/Shared/MyContainer";
 const MainLayout = () => {
   return (
     <div>
-      <Navbar></Navbar>
       <MyContainer>
+      <Navbar></Navbar>
         <Outlet></Outlet>
       </MyContainer>
       <Footer></Footer>
