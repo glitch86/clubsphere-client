@@ -42,7 +42,7 @@ const Register = () => {
       /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
     if (!regExp.test(password)) {
-      toast.error(
+      toast.success(
         "Password must be at least 6 characters long and must include both lower and uppercase"
       );
       return;

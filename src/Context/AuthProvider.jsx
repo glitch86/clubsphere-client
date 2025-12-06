@@ -5,7 +5,7 @@ import {
   signOut,
 } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { auth } from "../Firebase/sdk";
+import { auth } from "../FIrebase/sdk";
 import { AuthContext } from "./AuthContext";
 
 const googleAuth = new GoogleAuthProvider();
