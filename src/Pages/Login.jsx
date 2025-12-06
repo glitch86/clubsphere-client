@@ -75,7 +75,7 @@ const Login = () => {
             placeholder="Email"
           />
           {errors.email && (
-            <span className="text-red-500 text-sm">{errors.email.message}</span>
+            <span className="text-red-500 text-sm">{errors.email?.message}</span>
           )}
 
           <div className="relative">
@@ -86,7 +86,7 @@ const Login = () => {
               {...register("password", { required: "Password in required" })}
               placeholder="Password"
             />
-            {errors.email && (
+            {errors.password && (
               <span className="text-red-500 text-sm">
                 {errors.password?.message}
               </span>

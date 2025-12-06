@@ -72,7 +72,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`z-100 bg-base-200 rounded-xl my-5 sticky top-0 shadow-sm transform transition-transform duration-300 ${
+      className={`z-100 bg-base-200 rounded-xl my-5 md:sticky top-0 shadow-sm transform transition-transform duration-300 ${
         hide ? "-translate-y-full" : "translate-y-1"
       }`}
     >
@@ -121,23 +121,50 @@ const NavBar = () => {
         </div>
 
         <div className="navbar-end">
-        {/* search field */}
+          {/* search field */}
 
-        <div className=" flex">
-          <div>
-            <label className="input join-item">
-              
-              <input placeholder="search for clubs" required />
-            </label>
+          <div className="hidden md:flex">
+            <div className=" md:block">
+              <label className="input join-item">
+                <input placeholder="search for clubs" required />
+              </label>
+            </div>
+            <button className="btn btn-primary join-item">
+              <FaSearch size={17} />
+            </button>
           </div>
-          <button className="btn btn-primary join-item"><FaSearch size={17} /></button>
-        </div>
+          <div className="dropdown dropdown-end md:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className="m-1 btn btn-primary join-item"
+            >
+              <FaSearch size={17} />
+            </div>
+            <ul
+              tabIndex="-1"
+              className="dropdown-content menu bg-base-200 rounded-box z-1 w-60 p-2 shadow-sm"
+            >
+              <li>
+                <div className="md:flex">
+                  <div className=" md:block">
+                    <label className="input join-item">
+                      <input placeholder="search for clubs" required />
+                    </label>
+                  </div>
+                  <button className="btn btn-primary join-item">
+                    <FaSearch size={17} />
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
           <ThemeToggle></ThemeToggle>
 
           {loading ? (
             <h1>loading....</h1>
           ) : (
-            <div className="dropdown dropdown-end ml-3 cursor-pointer">
+            <div className="dropdown dropdown-end md:ml-3 cursor-pointer">
               <img
                 tabIndex={0}
                 role="button"
@@ -185,11 +212,11 @@ const NavBar = () => {
               {/* {console.log(user.photoURL)} */}
             </div>
           )}
-          <Link  to={"/login"} className={`btns ${user ? "hidden!" : ""}`}>
-              <div className="flex  gap-2 items-center">
-                <span>Login</span>
-                <HiOutlineLogin />
-              </div>
+          <Link to={"/login"} className={`btns ${user ? "hidden!" : ""}`}>
+            <div className="flex  gap-2 items-center">
+              <span>Login</span>
+              <HiOutlineLogin />
+            </div>
           </Link>
         </div>
       </div>
