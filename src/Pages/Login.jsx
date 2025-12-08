@@ -5,14 +5,14 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Firebase/sdk";
+import { auth } from "../FIrebase/sdk";
 import { useForm } from "react-hook-form";
 // import bg from '../assets/SimpleShiny.svg';
 
 // console.log(bg);
 
 const Login = () => {
-  const { setUser, googleSignIn } = useContext(AuthContext);
+  const { setUser, googleSignIn, addUserToDB } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
 
   const location = useLocation();
@@ -26,11 +26,10 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-
   // sign in with email and pass
   const handleSignin = (data) => {
-    const email = data?.email
-    const password = data?.password
+    const email = data?.email;
+    const password = data?.password;
 
     // console.log(email, password)
 
@@ -52,6 +51,13 @@ const Login = () => {
     googleSignIn()
       .then((res) => {
         setUser(res.user);
+        const newUser = {
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+        };
+        addUserToDB(newUser);
+        
         navigate(from);
         toast.success("Login Successful");
       })
@@ -75,7 +81,9 @@ const Login = () => {
             placeholder="Email"
           />
           {errors.email && (
-            <span className="text-red-500 text-sm">{errors.email?.message}</span>
+            <span className="text-red-500 text-sm">
+              {errors.email?.message}
+            </span>
           )}
 
           <div className="relative">

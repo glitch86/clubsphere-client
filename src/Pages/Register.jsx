@@ -8,10 +8,11 @@ import toast from "react-hot-toast";
 import { auth } from "../FIrebase/sdk";
 import { useForm, useWatch } from "react-hook-form";
 import dummy from "../assets/dummy.png";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
-  const { setUser, googleSignIn } = useContext(AuthContext);
+  const { setUser, googleSignIn, addUserToDB } = useContext(AuthContext);
   const location = useLocation();
   const from = location.state || "/";
   const navigate = useNavigate();
@@ -24,15 +25,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const addUserToDB = (newUser) => {
-    // return fetch("https://movie-master-server-six.vercel.app/users", {
-    //   method: "POST",
-    //   headers: {
-    //     "content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(newUser),
-    // });
-  };
+
 
   // sign up with email and pass
   const handleSignUp = (data) => {
@@ -52,7 +45,7 @@ const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         // add user in database
-        addUserToDB(newUser).then((res) => res.json());
+        addUserToDB(newUser);
 
         updateProfile(res.user, { displayName, photoURL })
           .then(() => {
@@ -75,7 +68,7 @@ const Register = () => {
           email: res.user.email,
           photoURL: res.user.photoURL,
         };
-        addUserToDB(newUser).then((res) => res.json());
+        addUserToDB(newUser);
 
         // .then((data) => toast.error(data.message));
 
@@ -88,14 +81,13 @@ const Register = () => {
 
   // img preview
   const imgURL = useWatch({ control, name: "photoURL" });
-  console.log(imgURL);
+  // console.log(imgURL);
 
   return (
     <div className="h-fit">
       <div className="hidden md:block text-left">
         <h1 className="heading">Register</h1>
       </div>
-
 
       <div className="flex flex-col gap-8 md:flex-row justify-center items-center h-screen">
         <div className="md:block ">

@@ -17,9 +17,6 @@ const Clubs = () => {
 
   //   console.log(clubs);
 
-  const { data } = axiosSecure.get("/clubs");
-  console.log(data);
-
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }

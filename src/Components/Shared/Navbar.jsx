@@ -72,7 +72,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`z-100 bg-base-200 rounded-xl my-5 md:sticky top-0 shadow-sm transform transition-transform duration-300 ${
+      className={`z-100 bg-base-200 rounded-xl my-5 sticky top-0 shadow-sm transform transition-transform duration-300 ${
         hide ? "-translate-y-full" : "translate-y-1"
       }`}
     >

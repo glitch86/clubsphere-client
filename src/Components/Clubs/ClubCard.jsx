@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from "react-router";
 
 const ClubCard = ({ club }) => {
   console.log(club);
 
   // getting club data
   const {
+    _id,
     bannerImage,
     category,
     clubName,
@@ -18,7 +20,7 @@ const ClubCard = ({ club }) => {
   } = club;
 
   return (
-    <div className="card bg-base-200 w-80 md:w-96 shadow-sm mx-auto shadow 
+    <div className="card bg-base-200 w-80 md:w-96 shadow-sm mx-auto 
             transition-transform duration-300 ease-out
             hover:scale-[1.03] hover:shadow-lg">
       <figure className="px-10 pt-10">
@@ -34,7 +36,7 @@ const ClubCard = ({ club }) => {
           {description}
         </p>
         <div className="card-actions w-full justify-center items-center">
-          <button className="btn btn-primary flex-1 rounded-xl">View Details</button>
+          <Link to={`/clubs/${_id}`} className="btn btn-primary flex-1 rounded-xl">View Details</Link>
           <button className="btn btn-outline flex-1 rounded-xl">Join Now <span className="text-yellow-300">${membershipFee}</span></button>
         </div>
       </div>
