@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Clubs from "../Pages/Clubs";
 import Events from "../Pages/Events";
+import ClubDetails from "../Pages/ClubDetails";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "/clubs",
         Component: Clubs,
+      },
+      {
+        path: "/clubs/:id",
+        Component: ClubDetails,
       },
       {
         path: "/events",

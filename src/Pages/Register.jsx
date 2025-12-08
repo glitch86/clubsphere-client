@@ -91,7 +91,7 @@ const Register = () => {
   console.log(imgURL);
 
   return (
-    <div className="py-9">
+    <div className="h-fit">
       <div className="hidden md:block text-left">
         <h1 className="heading">Register</h1>
       </div>
