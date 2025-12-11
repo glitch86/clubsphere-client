@@ -48,12 +48,12 @@ const NavBar = () => {
       <NavLink to="/events" className="mr-5">
         Events
       </NavLink>
-      {/* <NavLink
-        to="/events"
+      <NavLink
+        to="/dashboard"
         className={`mr-5  ${user ? "block" : "hidden"}`}
       >
-        Events
-      </NavLink> */}
+        Dashboard
+      </NavLink>
     </>
   );
 

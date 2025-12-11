@@ -6,6 +6,11 @@ import Register from "../Pages/Register";
 import Clubs from "../Pages/Clubs";
 import Events from "../Pages/Events";
 import ClubDetails from "../Pages/ClubDetails";
+import PrivateRoute from "./PrivateRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
+import PaymentCancelled from "../Pages/Payment/PaymentCancelled";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +40,28 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "/payment-cancelled",
+        Component: PaymentCancelled,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: DashboardHome,
       },
     ],
   },
