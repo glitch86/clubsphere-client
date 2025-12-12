@@ -2,7 +2,7 @@ import React from "react";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import ClubCard from "../Components/Clubs/ClubCard";
-import LoadingSpinner from "../Components/Shared/Loading";
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 
 const Clubs = () => {
   const axiosSecure = useAxiosSecure();

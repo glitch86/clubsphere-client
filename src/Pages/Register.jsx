@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { auth } from "../FIrebase/sdk";
 import { useForm, useWatch } from "react-hook-form";
 import dummy from "../assets/dummy.png";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);

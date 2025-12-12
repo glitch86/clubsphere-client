@@ -3,18 +3,24 @@ import { IoIosSunny } from "react-icons/io";
 import { LuSunMoon } from "react-icons/lu";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
 
   const handleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <button className="btn bg-transparent border-none btn-circle" onClick={handleTheme}>
+    <button
+      className="btn bg-transparent border-none btn-circle"
+      onClick={handleTheme}
+    >
       {theme === "dark" ? <LuSunMoon size={33} /> : <IoIosSunny size={33} />}
     </button>
   );

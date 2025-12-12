@@ -1,6 +1,6 @@
 import React from "react";
 
-const Hero = ({ clubInfo }) => {
+const Hero = ({ clubInfo, handlePayment }) => {
   const { bannerImage, clubName, description } = clubInfo || {};
 
   console.log(clubInfo);
@@ -13,7 +13,7 @@ const Hero = ({ clubInfo }) => {
         <div>
           <h1 className="text-5xl font-bold">{clubName}</h1>
           <p className="py-6">{description}</p>
-          <button className="btn btn-primary">Become a member</button>
+          <button onClick={handlePayment} className="btn btn-primary">Become a member</button>
         </div>
       </div>
     </div>

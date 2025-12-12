@@ -11,6 +11,8 @@ import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 import PaymentCancelled from "../Pages/Payment/PaymentCancelled";
 import DashboardLayout from "../Layout/DashboardLayout";
+import ManageClubs from "../Pages/Dashboard/ManageClubs";
+import AddClubs from "../Pages/AddClubs";
 
 export const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: DashboardHome,
+      },
+      {
+        path: "/dashboard/manage-clubs",
+        Component: ManageClubs,
+      },
+      {
+        path: "/dashboard/add-clubs",
+        Component: AddClubs,
       },
     ],
   },

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Hero from "../Components/ClubDetails/Hero";
 import Info from "../Components/ClubDetails/Info";
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
+import { AuthContext } from "../Context/AuthContext";
 
 const ClubDetails = () => {
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
   // console.log(id)
 
   const axiosSecure = useAxiosSecure();
@@ -19,11 +22,32 @@ const ClubDetails = () => {
     },
   });
 
+  const { _id, clubName, membershipFee } = clubInfo || {};
+
+  const handlePayment = async () => {
+    const clubInfo = {
+      fee: membershipFee,
+      clubId: _id,
+      userEmail: user.email,
+      clubName: clubName,
+      // trackingId: club.trackingId,
+    };
+
+    // console.log(clubInfo)
+    const res = await axiosSecure.post("/payment-checkout-session", clubInfo);
+
+    // console.log(res.data.url);
+    window.location.assign(res.data.url);
+  };
+
   //   console.log(clubInfo)
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return (
     <div className="my-8">
-      <Hero clubInfo={clubInfo}></Hero>
+      <Hero handlePayment={handlePayment} clubInfo={clubInfo}></Hero>
       <Info clubInfo={clubInfo}></Info>
     </div>
   );
