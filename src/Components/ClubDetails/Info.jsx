@@ -11,6 +11,7 @@ const Info = ({ clubInfo }) => {
     membershipFee,
     status,
   } = clubInfo || {};
+  console.log(clubInfo)
   return (
     <div className="my-8 bg-base-200 rounded-2xl min-h-fit p-9">
       <h2 className="heading my-5">Club Details</h2>

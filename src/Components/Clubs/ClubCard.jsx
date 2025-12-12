@@ -27,7 +27,7 @@ const ClubCard = ({ club }) => {
   // payment
   const handlePayment = async () => {
     const clubInfo = {
-      fee: membershipFee,
+      fee: parseInt(membershipFee),
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
@@ -41,6 +41,10 @@ const ClubCard = ({ club }) => {
     window.location.assign(res.data.url);
   };
 
+  if(status === 'pending'){
+    return
+  }
+
   return (
     <div
       className="card bg-base-200 w-80 md:w-96 shadow-sm mx-auto 
@@ -48,7 +52,7 @@ const ClubCard = ({ club }) => {
             hover:scale-[1.03] hover:shadow-lg"
     >
       <figure className="px-10 pt-10">
-        <img src={bannerImage} alt="Shoes" className="rounded-xl" />
+        <img src={bannerImage} alt="banner" className="rounded-xl" />
       </figure>
       <div className="card-body items-center text-center">
         <h2 className="card-title">{clubName}</h2>
