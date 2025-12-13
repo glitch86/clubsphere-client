@@ -41,7 +41,7 @@ const ClubCard = ({ club }) => {
     window.location.assign(res.data.url);
   };
 
-  if(status === 'pending'){
+  if(status !== 'approved'){
     return
   }
 

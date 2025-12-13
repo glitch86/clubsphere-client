@@ -71,6 +71,7 @@ const AddClubs = () => {
             <option value="Tech">Tech</option>
             <option value="Books">Books</option>
             <option value="Art">Art</option>
+            <option value="Gaming">Gaming</option>
           </select>
         </div>
         {/* Location */}

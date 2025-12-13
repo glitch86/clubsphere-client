@@ -1,12 +1,13 @@
 import React from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { Link } from "react-router";
 
 const ClubTable = () => {
   // fetch data
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
   // console.log(axiosSecure)
   const { data: clubs = [], isLoading } = useQuery({
     queryKey: ["clubs"],
@@ -15,6 +16,20 @@ const ClubTable = () => {
       return result.data;
     },
   });
+
+  // update status
+
+  const { mutate: updateStatus } = useMutation({
+    mutationFn: ({ id, status }) =>
+      axiosSecure.patch(`/clubs/${id}/status`, { status }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["clubs"]);
+    },
+  });
+
+  const handleUpdateStatus = (status, id) => {
+    updateStatus({ id, status });
+  };
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -56,15 +71,44 @@ const ClubTable = () => {
                   </div>
                 </div>
               </td>
-              <td>
-                {club.category}
-              </td>
+              <td>{club.category}</td>
               <td>${club.membershipFee}</td>
               <td>{club.createdAt}</td>
               <td>{club.managerEmail}</td>
-              <td>{club.status}</td>
+              <td>
+                <div>
+                  <select
+                    defaultValue={club.status}
+                    className="select w-full rounded-full  focus:outline-gray-200"
+                  >
+                    <option
+                      onClick={() => handleUpdateStatus("approved", club._id)}
+                      value="approved"
+                    >
+                      Approved
+                    </option>
+                    <option
+                      onClick={() => handleUpdateStatus("pending", club._id)}
+                      value="pending"
+                    >
+                      Pending
+                    </option>
+                    <option
+                      onClick={() => handleUpdateStatus("rejected", club._id)}
+                      value="rejected"
+                    >
+                      Rejected
+                    </option>
+                  </select>
+                </div>
+              </td>
               <th>
-                <Link to={`/clubs/${club._id}`} className="btn btn-ghost btn-xs">details</Link>
+                <Link
+                  to={`/clubs/${club._id}`}
+                  className="btn btn-ghost btn-xs"
+                >
+                  details
+                </Link>
               </th>
             </tr>
           ))}
