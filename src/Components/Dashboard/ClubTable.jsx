@@ -21,7 +21,7 @@ const ClubTable = () => {
 
   const { mutate: updateStatus } = useMutation({
     mutationFn: ({ id, status }) =>
-      axiosSecure.patch(`/clubs/${id}/status`, { status }),
+      axiosSecure.patch(`/clubs/${id}/update`, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries(["clubs"]);
     },

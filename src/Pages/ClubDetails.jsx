@@ -6,6 +6,7 @@ import Hero from "../Components/ClubDetails/Hero";
 import Info from "../Components/ClubDetails/Info";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { AuthContext } from "../Context/AuthContext";
+import MemberTable from "../Components/ClubDetails/MemberTable";
 
 const ClubDetails = () => {
   const { id } = useParams();
@@ -48,7 +49,10 @@ const ClubDetails = () => {
   return (
     <div className="my-8">
       <Hero handlePayment={handlePayment} clubInfo={clubInfo}></Hero>
-      <Info clubInfo={clubInfo}></Info>
+      <div className="my-8 justify-between flex flex-col md:flex-row gap-7">
+        <Info clubInfo={clubInfo}></Info>
+        <MemberTable></MemberTable>
+      </div>
     </div>
   );
 };

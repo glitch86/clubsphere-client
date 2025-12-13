@@ -13,7 +13,7 @@ const Info = ({ clubInfo }) => {
   } = clubInfo || {};
   console.log(clubInfo)
   return (
-    <div className="my-8 bg-base-200 rounded-2xl min-h-fit p-9">
+    <div className="bg-base-200 rounded-2xl min-h-fit p-9 w-full">
       <h2 className="heading my-5">Club Details</h2>
 
       <div className="flex flex-col gap-3">

@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import AuthProvider from "../../Context/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/AuthContext";
+import toast from "react-hot-toast";
 
 const ClubCard = ({ club }) => {
   // console.log(club);
@@ -13,15 +14,11 @@ const ClubCard = ({ club }) => {
   const {
     _id,
     bannerImage,
-    category,
     clubName,
-    createdAt,
     description,
-    location,
-    managerEmail,
-    members,
     membershipFee,
     status,
+    members,
   } = club;
 
   // payment
@@ -31,9 +28,19 @@ const ClubCard = ({ club }) => {
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
-      // trackingId: club.trackingId,
     };
+    const updatedMembers = [...members];
 
+    if (membershipFee === 0) {
+      toast.success(`You're a member of ${clubName}`);
+
+      updatedMembers.push({
+        email: user.email,
+      });
+      axiosSecure.patch(`/clubs/${_id}/update`, { members: updatedMembers });
+
+      return;
+    }
     // console.log(clubInfo)
     const res = await axiosSecure.post("/payment-checkout-session", clubInfo);
 
@@ -41,8 +48,8 @@ const ClubCard = ({ club }) => {
     window.location.assign(res.data.url);
   };
 
-  if(status !== 'approved'){
-    return
+  if (status !== "approved") {
+    return;
   }
 
   return (
@@ -64,8 +71,13 @@ const ClubCard = ({ club }) => {
           >
             View Details
           </Link>
-          <button onClick={() => handlePayment()} className="btn btn-outline flex-1 rounded-xl">
-            Join Now <span className="text-yellow-300">${membershipFee}</span>
+          <button
+            onClick={() => handlePayment()}
+            className="btn btn-outline flex-1 rounded-xl"
+            disabled={members.some((member) => member.email === user.email)}
+          >
+            Join Now{" "}
+            <span className={`text-yellow-300 `}>${membershipFee}</span>
           </button>
         </div>
       </div>
