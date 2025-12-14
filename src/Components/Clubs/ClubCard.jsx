@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import AuthProvider from "../../Context/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/AuthContext";
@@ -10,6 +10,7 @@ const ClubCard = ({ club }) => {
   // console.log(club);
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   // getting club data
   const {
@@ -24,6 +25,10 @@ const ClubCard = ({ club }) => {
 
   // payment
   const handlePayment = async () => {
+    if(!user){
+      navigate('/login');
+      return
+    }
     const clubInfo = {
       fee: parseInt(membershipFee),
       clubId: _id,
@@ -75,10 +80,12 @@ const ClubCard = ({ club }) => {
           >
             View Details
           </Link>
+
+          
           <button
             onClick={() => handlePayment()}
             className="btn btn-outline flex-1 rounded-xl"
-            disabled={members.some((member) => member.email === user.email)}
+            disabled={members.some((member) => member.email === user?.email)}
           >
             Join Now{" "}
             <span className={`text-yellow-300 `}>${membershipFee}</span>

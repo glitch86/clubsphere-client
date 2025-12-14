@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import { Link } from "react-router";
 
 const Hero = ({ clubInfo, handlePayment }) => {
   const { user } = useContext(AuthContext);
@@ -18,13 +19,16 @@ const Hero = ({ clubInfo, handlePayment }) => {
         <div>
           <h1 className="text-5xl font-bold">{clubName}</h1>
           <p className="py-6">{description}</p>
+          {
+            user? 
           <button
             onClick={handlePayment}
             className="btn btn-primary"
             disabled={members.some((member) => member.email === user.email)}
           >
             Become a member
-          </button>
+          </button> : <Link to={'/login'} className="btn btn-primary">Login to become a member</Link>
+          }
         </div>
       </div>
     </div>
