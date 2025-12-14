@@ -12,7 +12,7 @@ const Hero = ({ clubInfo, handlePayment }) => {
         <div className=" bg-red-400 rounded-xl">
           <img
             src={bannerImage}
-            className="max-w-full bg-transparent rounded-lg transform  -rotate-3 "
+            className="max-w-full bg-transparent rounded-lg transform w-2xs -rotate-3 "
           />
         </div>
         <div>

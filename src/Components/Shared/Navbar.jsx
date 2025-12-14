@@ -212,12 +212,6 @@ const NavBar = () => {
                   <a>Profile</a>
                 </li>
                 <li>
-                  <Link to={"/movies/add"}>Add Movies</Link>
-                </li>
-                <li>
-                  <Link to={"/watchlist"}>WatchList</Link>
-                </li>
-                <li>
                   <button className="btns" onClick={handleSignout}>
                     <Link to={"/login"}>
                       <div className="flex  gap-2 items-center">

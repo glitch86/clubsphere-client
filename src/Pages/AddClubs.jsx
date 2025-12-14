@@ -33,8 +33,9 @@ const AddClubs = () => {
 
     const {data:clubData} = await axiosSecure.post("/clubs/add", newClub)
     console.log(clubData)
+    toast.success("Queued for approval.")
 
-    // navigate("/clubs");
+    navigate("/clubs");
   };
 
   return (

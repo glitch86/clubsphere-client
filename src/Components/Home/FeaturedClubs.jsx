@@ -16,6 +16,11 @@ const FeaturedClubs = () => {
     },
   });
 
+  const orderedClubs = [...clubs].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  ).slice(0, 6);
+  // console.log(orderedClubs);
+
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
@@ -23,7 +28,7 @@ const FeaturedClubs = () => {
     <div className="">
       <h1 className="heading">Featured Clubs</h1>
       <motion.div className="flex md:grid grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto py-10 h-full">
-        {clubs.map((club) => (
+        {orderedClubs.map((club) => (
           <FeaturedCards key={club._id} club={club}></FeaturedCards>
         ))}
       </motion.div>
