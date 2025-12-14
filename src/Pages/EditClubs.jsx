@@ -5,7 +5,7 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import bannerDummy from "../assets/bannerDummy.png";
-
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 
 const EditClubs = () => {
   const { user } = use(AuthContext);
@@ -16,7 +16,7 @@ const EditClubs = () => {
 
   //   fetch info
   const { id } = useParams();
-  const { data: clubInfo = [] } = useQuery({
+  const { data: clubInfo = [], isLoading } = useQuery({
     queryKey: ["clubInfo", id],
     queryFn: async () => {
       const result = await axiosSecure.get(`/clubs/${id}`);
@@ -24,32 +24,39 @@ const EditClubs = () => {
     },
   });
 
-
-const { mutate: updateClubInfo } = useMutation({
+  const { mutate: updateClubInfo } = useMutation({
     mutationFn: ({ id, data }) =>
       axiosSecure.patch(`/clubs/${id}/update`, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(["clubs"]);
+      queryClient.invalidateQueries(["clubInfo", id]);
     },
   });
 
   const handleUpdateClub = (data) => {
-
     // console.log(data)
-    updateClubInfo({id, data });
+    updateClubInfo({ id, data });
+    navigate(-1);
   };
 
+  console.log(clubInfo.category);
+  const { register, handleSubmit, control } = useForm();
+  const imgURL =
+    useWatch({ control, name: "bannerImage" }) || clubInfo.bannerImage;
 
-  const { register, handleSubmit,control } = useForm();
-  const imgURL = useWatch({ control, name: "bannerImage" });
-
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
   return (
     <div>
       <div>
         <h1 className="heading text-center">Editng {clubInfo.clubName}</h1>
         <div className="hero  min-h-screen">
           <div className="hero-content  flex-col lg:flex-row md:gap-40">
-            <img className="rounded-2xl" src={imgURL || bannerDummy} alt="" />
+            <img
+              className="rounded-2xl w-full max-w-lg h-64 object-cover"
+              src={imgURL || bannerDummy}
+              alt=""
+            />
             <div>
               <form
                 onSubmit={handleSubmit(handleUpdateClub)}
@@ -63,7 +70,7 @@ const { mutate: updateClubInfo } = useMutation({
                   <input
                     type="text"
                     defaultValue={clubInfo.clubName}
-                    {...register("name", { required: "Name is required" })}
+                    {...register("clubName", { required: "Name is required" })}
                     className="input input-bordered w-full"
                     placeholder="Club Name"
                   />
@@ -112,7 +119,9 @@ const { mutate: updateClubInfo } = useMutation({
                   <input
                     type="number"
                     defaultValue={clubInfo.membershipFee}
-                    {...register("fee", { required: "Fee is required" })}
+                    {...register("membershipFee", {
+                      required: "Fee is required",
+                    })}
                     className="input input-bordered w-full"
                     placeholder="starts from $0"
                   />
@@ -168,7 +177,6 @@ const { mutate: updateClubInfo } = useMutation({
           </div>
         </div>
       </div>
-
     </div>
   );
 };

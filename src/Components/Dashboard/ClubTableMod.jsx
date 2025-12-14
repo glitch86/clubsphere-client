@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/AuthContext";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { Link } from "react-router";
@@ -22,20 +22,6 @@ const ClubTableMod = () => {
   const myClubs = clubs.filter((club) => club.managerEmail === user.email);
   console.log(myClubs);
 
-  // update status
-
-  //   const { mutate: updateStatus } = useMutation({
-  //     mutationFn: ({ id, status }) =>
-  //       axiosSecure.patch(`/clubs/${id}/update`, { status }),
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries(["clubs"]);
-  //     },
-  //   });
-
-  //   const handleUpdateStatus = (status, id) => {
-  //     updateStatus({ id, status });
-  //   };
-
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
@@ -49,6 +35,7 @@ const ClubTableMod = () => {
             <th>Name</th>
             <th>Category</th>
             <th>Created At</th>
+            <th>Updated On</th>
             <th>Members</th>
             <th>View Details</th>
             <th>Edit</th>
@@ -76,6 +63,7 @@ const ClubTableMod = () => {
               </td>
               <td>{club.category}</td>
               <td>{club.createdAt}</td>
+              <td>{club.updatedAt}</td>
               <td>{club.members.length}</td>
               <th>
                 <Link to={`/clubs/${club._id}`} className="btn btn-ghost btn-xs">Details</Link>

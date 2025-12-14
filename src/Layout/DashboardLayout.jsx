@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
   const theme = localStorage.getItem("theme") || "light";
@@ -34,7 +34,7 @@ const DashboardLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4">Navbar Title</div>
+          <div className="px-4"><Link to={'/'}><span className="goth">ClubSphere</span></Link></div>
         </nav>
         {/* Page content here */}
         <div className="p-4">
@@ -78,7 +78,7 @@ const DashboardLayout = () => {
 
             {/* List item */}
             <li>
-              <Link
+              <NavLink
               to={'/dashboard/manage-clubs'}
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="manage clubs"
@@ -100,7 +100,37 @@ const DashboardLayout = () => {
                   <circle cx="7" cy="7" r="3"></circle>
                 </svg>
                 <span className="is-drawer-close:hidden">Manage Clubs</span>
-              </Link>
+              </NavLink>
+            </li>
+
+
+
+
+            {/* moderator manage club */}
+            <li>
+              <NavLink
+              to={'/dashboard/moderate-clubs'}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="manage clubs"
+              >
+                {/* Settings icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  fill="none"
+                  stroke="currentColor"
+                  className="my-1.5 inline-block size-4"
+                >
+                  <path d="M20 7h-9"></path>
+                  <path d="M14 17H5"></path>
+                  <circle cx="17" cy="17" r="3"></circle>
+                  <circle cx="7" cy="7" r="3"></circle>
+                </svg>
+                <span className="is-drawer-close:hidden">Manage Clubs</span>
+              </NavLink>
             </li>
           </ul>
         </div>
