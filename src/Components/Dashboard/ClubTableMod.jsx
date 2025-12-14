@@ -1,71 +1,91 @@
-import React from "react";
+import React, { useContext } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { AuthContext } from "../../Context/AuthContext";
+import LoadingSpinner from "../Shared/LoadingSpinner";
+import { Link } from "react-router";
 
 const ClubTableMod = () => {
+  const { user } = useContext(AuthContext);
+  // fetch data
+  const axiosSecure = useAxiosSecure();
+  //   const queryClient = useQueryClient();
+  // console.log(axiosSecure)
+  const { data: clubs = [], isLoading } = useQuery({
+    queryKey: ["clubs"],
+    queryFn: async () => {
+      const result = await axiosSecure.get("/clubs");
+      return result.data;
+    },
+  });
+
+  const myClubs = clubs.filter((club) => club.managerEmail === user.email);
+  console.log(myClubs);
+
+  // update status
+
+  //   const { mutate: updateStatus } = useMutation({
+  //     mutationFn: ({ id, status }) =>
+  //       axiosSecure.patch(`/clubs/${id}/update`, { status }),
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(["clubs"]);
+  //     },
+  //   });
+
+  //   const handleUpdateStatus = (status, id) => {
+  //     updateStatus({ id, status });
+  //   };
+
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
         {/* head */}
         <thead>
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
             <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th></th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th>Members</th>
+            <th>View Details</th>
+            <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-base-200">
           {/* row 1 */}
-          <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle h-12 w-12">
-                    <img
-                      src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                      alt="Avatar Tailwind CSS Component"
-                    />
+          {myClubs.map((club) => (
+            <tr key={club._id}>
+              <td>
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="mask mask-squircle h-12 w-12">
+                      <img
+                        src={club.bannerImage}
+                        alt="Avatar Tailwind CSS Component"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-bold">{club.clubName}</div>
+                    <div className="text-sm opacity-50">{club.location}</div>
                   </div>
                 </div>
-                <div>
-                  <div className="font-bold">Hart Hagerty</div>
-                  <div className="text-sm opacity-50">United States</div>
-                </div>
-              </div>
-            </td>
-            <td>
-              Zemlak, Daniel and Leannon
-              <br />
-              <span className="badge badge-ghost badge-sm">
-                Desktop Support Technician
-              </span>
-            </td>
-            <td>Purple</td>
-            <th>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </th>
-          </tr>
-
+              </td>
+              <td>{club.category}</td>
+              <td>{club.createdAt}</td>
+              <td>{club.members.length}</td>
+              <th>
+                <Link to={`/clubs/${club._id}`} className="btn btn-ghost btn-xs">Details</Link>
+              </th>
+              <th>
+                <Link to={`/dashboard/edit-clubs/${club._id}`} className="btn btn-primary">Edit</Link>
+              </th>
+            </tr>
+          ))}
         </tbody>
-        {/* foot */}
-        <tfoot>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th></th>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );

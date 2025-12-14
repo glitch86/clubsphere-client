@@ -13,6 +13,8 @@ import PaymentCancelled from "../Pages/Payment/PaymentCancelled";
 import DashboardLayout from "../Layout/DashboardLayout";
 import ManageClubs from "../Pages/Dashboard/ManageClubs";
 import AddClubs from "../Pages/AddClubs";
+import ModerateClubs from "../Pages/Dashboard/ModerateClubs";
+import EditClubs from "../Pages/EditClubs";
 
 export const router = createBrowserRouter([
   {
@@ -70,8 +72,16 @@ export const router = createBrowserRouter([
         Component: ManageClubs,
       },
       {
+        path: "/dashboard/moderate-clubs",
+        Component: ModerateClubs,
+      },
+      {
         path: "/dashboard/add-clubs",
         Component: AddClubs,
+      },
+      {
+        path: "/dashboard/edit-clubs/:id",
+        Component: EditClubs,
       },
     ],
   },

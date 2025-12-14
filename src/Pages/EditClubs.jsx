@@ -1,46 +1,34 @@
 import React, { use } from "react";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
-import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 
-const AddClubs = () => {
+const EditClubs = () => {
   const { user } = use(AuthContext);
   // console.log(user.email);
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  //   fetch info
+  const { id } = useParams();
+  // console.log(axiosSecure)
+  const { data: clubInfo = [], isLoading } = useQuery({
+    queryKey: ["clubInfo", id],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/clubs/${id}`);
+      return result.data;
+    },
+  });
 
-  const handleAddClub = async (data) => {
-    const newClub = {
-      clubName: data?.name,
-      category: data?.category,
-      location: data?.location,
-      membershipFee: data?.fee,
-      bannerImage: data?.url,
-      managerEmail: data?.addedBy,
-      description: data?.description
-    };
-
-    // console.log(newClub);
-
-    const {data:clubData} = await axiosSecure.post("/clubs/add", newClub)
-    console.log(clubData)
-    toast.success("Queued for approval.")
-
-    navigate("/clubs");
-  };
+  const { register, handleSubmit } = useForm();
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      <h2 className="text-2xl font-semibold text-center mb-2">Add a club</h2>
+      <h2 className="text-2xl font-semibold text-center mb-2">Editing {clubInfo.clubName}</h2>
       <form
-        onSubmit={handleSubmit(handleAddClub)}
+        onSubmit={handleSubmit()}
         className="card w-full max-w-lg p-6 space-y-4 md:grid grid-cols-2 gap-4"
       >
         {/* clubname */}
@@ -50,6 +38,7 @@ const AddClubs = () => {
           </label>
           <input
             type="text"
+            defaultValue={clubInfo.clubName}
             {...register("name", { required: "Name is required" })}
             className="input input-bordered w-full"
             placeholder="Club Name"
@@ -59,7 +48,7 @@ const AddClubs = () => {
         <div>
           <label className="label font-medium">Catergory</label>
           <select
-            defaultValue={""}
+            defaultValue={clubInfo.category}
             {...register("category", { required: "Category is required" })}
             className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
           >
@@ -80,6 +69,7 @@ const AddClubs = () => {
           </label>
           <input
             type="text"
+            defaultValue={clubInfo.location}
             {...register("location", { required: "Location is required" })}
             className="input input-bordered w-full"
             placeholder="Location"
@@ -93,6 +83,8 @@ const AddClubs = () => {
           </label>
           <input
             type="number"
+            defaultValue={clubInfo.membershipFee}
+
             {...register("fee", { required: "Fee is required" })}
             className="input input-bordered w-full"
             placeholder="starts from $0"
@@ -106,6 +98,7 @@ const AddClubs = () => {
           </label>
           <input
             type="url"
+            defaultValue={clubInfo.bannerImage}
             {...register("url")}
             className="input input-bordered w-full"
             placeholder="https://example.com/poster.jpg"
@@ -130,6 +123,7 @@ const AddClubs = () => {
             <span className="label-text">Description</span>
           </label>
           <textarea
+          defaultValue={clubInfo.description}
             {...register("description")}
             className="textarea textarea-bordered w-full"
             rows="3"
@@ -139,7 +133,7 @@ const AddClubs = () => {
 
         <div className="pt-4 col-span-2">
           <button type="submit" className="btn btn-primary w-full">
-            Apply for approval
+           Commit Changes
           </button>
         </div>
       </form>
@@ -147,4 +141,4 @@ const AddClubs = () => {
   );
 };
 
-export default AddClubs;
+export default EditClubs;
