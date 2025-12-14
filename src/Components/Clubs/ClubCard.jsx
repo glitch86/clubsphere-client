@@ -4,6 +4,7 @@ import AuthProvider from "../../Context/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/AuthContext";
 import toast from "react-hot-toast";
+import { motion } from "motion/react";
 
 const ClubCard = ({ club }) => {
   // console.log(club);
@@ -53,10 +54,13 @@ const ClubCard = ({ club }) => {
   }
 
   return (
-    <div
-      className="card bg-base-200 w-80 md:w-96 shadow-sm mx-auto 
-            transition-transform duration-300 ease-out
-            hover:scale-[1.03] hover:shadow-lg"
+    <motion.div
+      className="card bg-base-200 w-72 lg:w-80 shadow-sm mx-auto "
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 100, damping: 12 }}
     >
       <figure className="px-10 pt-10">
         <img src={bannerImage} alt="banner" className="rounded-xl" />
@@ -81,7 +85,7 @@ const ClubCard = ({ club }) => {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

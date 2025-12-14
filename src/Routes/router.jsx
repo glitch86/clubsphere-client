@@ -15,11 +15,13 @@ import ManageClubs from "../Pages/Dashboard/ManageClubs";
 import AddClubs from "../Pages/AddClubs";
 import ModerateClubs from "../Pages/Dashboard/ModerateClubs";
 import EditClubs from "../Pages/EditClubs";
+import ErrorPage from "../Pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,

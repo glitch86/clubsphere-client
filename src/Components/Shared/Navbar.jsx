@@ -96,10 +96,10 @@ const NavBar = () => {
       }`}
     >
       <div className="navbar container mx-auto">
-        <div className="navbar-start lg:w-fit mx-6">
-          <div className="drawer md:hidden">
+        <div className="navbar-start lg:w-fit lg:mx-6">
+          <div className="drawer w-fit mr-2 lg:hidden">
             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
+            <div className="drawer-content ">
               <label htmlFor="my-drawer-1" className=" drawer-button">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,44 +140,7 @@ const NavBar = () => {
         </div>
 
         <div className="navbar-end">
-          {/* search field */}
-
-          <div className="hidden md:flex">
-            <div className=" md:block">
-              <label className="input join-item">
-                <input placeholder="search for clubs" required />
-              </label>
-            </div>
-            <button className="btn btn-primary join-item">
-              <FaSearch size={17} />
-            </button>
-          </div>
-          <div className="dropdown dropdown-end md:hidden">
-            <div
-              tabIndex={0}
-              role="button"
-              className="m-1 btn btn-primary join-item"
-            >
-              <FaSearch size={17} />
-            </div>
-            <ul
-              tabIndex="-1"
-              className="dropdown-content menu bg-base-200 rounded-box z-1 w-60 p-2 shadow-sm"
-            >
-              <li>
-                <div className="md:flex">
-                  <div className=" md:block">
-                    <label className="input join-item">
-                      <input placeholder="search for clubs" required />
-                    </label>
-                  </div>
-                  <button className="btn btn-primary join-item">
-                    <FaSearch size={17} />
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
+    
           <ThemeToggle></ThemeToggle>
 
           {loading ? (
