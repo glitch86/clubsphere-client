@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
+import Hero from "../Components/Home/Hero";
+import FeaturedClubs from "../Components/Home/FeaturedClubs";
 
 const Home = () => {
-    return (
-        <div className='h-screen'>
-            home
-        </div>
-    );
+  return (
+    <div className=" py-8 px-4 ">
+      <Hero></Hero>
+      <FeaturedClubs></FeaturedClubs>
+    </div>
+  );
 };
 
 export default Home;

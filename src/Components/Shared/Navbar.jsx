@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { HiOutlineLogin } from "react-icons/hi";
 import { FiLogOut } from "react-icons/fi";
+import { motion } from "motion/react";
 import dummy from "../../assets/dummy.png";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Context/AuthContext";
@@ -36,23 +37,41 @@ const NavBar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScroll]);
+
   // Nav links
   const links = (
     <>
       <NavLink to="/" className="mr-5">
-        Home
+        <motion.p
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 12 }}
+        >
+          Home
+        </motion.p>
       </NavLink>
       <NavLink to="/clubs" className="mr-5">
-        Clubs
+        <motion.p
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 12 }}
+        >
+          Clubs
+        </motion.p>
       </NavLink>
       <NavLink to="/events" className="mr-5">
-        Events
+        <motion.p
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 12 }}
+        >
+          Events
+        </motion.p>
       </NavLink>
-      <NavLink
-        to="/dashboard"
-        className={`mr-5  ${user ? "block" : "hidden"}`}
-      >
-        Dashboard
+      <NavLink to="/dashboard" className={`mr-5  ${user ? "block" : "hidden"}`}>
+        <motion.p
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 12 }}
+        >
+          Dashboard
+        </motion.p>
       </NavLink>
     </>
   );
