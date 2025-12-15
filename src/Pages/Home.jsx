@@ -1,6 +1,6 @@
-import React from "react";
 import Hero from "../Components/Home/Hero";
 import FeaturedClubs from "../Components/Home/FeaturedClubs";
+import { AuthContext } from "../Context/AuthContext";
 
 const Home = () => {
   return (

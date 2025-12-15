@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/AuthContext";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { Link } from "react-router";
@@ -9,7 +9,7 @@ const ClubTableMod = () => {
   const { user } = useContext(AuthContext);
   // fetch data
   const axiosSecure = useAxiosSecure();
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   // console.log(axiosSecure)
   const { data: clubs = [], isLoading } = useQuery({
     queryKey: ["clubs"],
@@ -19,8 +19,22 @@ const ClubTableMod = () => {
     },
   });
 
+  // delete queries
+  const deleteClub = useMutation({
+    mutationFn: (id) => {
+      axiosSecure.delete(`/clubs/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clubs"] });
+    },
+  });
+
+  const handleDeleteClub = (id) => {
+    deleteClub.mutate(id);
+  };
+
   const myClubs = clubs.filter((club) => club.managerEmail === user.email);
-  console.log(myClubs);
+  // console.log(myClubs);
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -39,6 +53,7 @@ const ClubTableMod = () => {
             <th>Members</th>
             <th>View Details</th>
             <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody className="bg-base-200">
@@ -66,10 +81,28 @@ const ClubTableMod = () => {
               <td>{club.updatedAt}</td>
               <td>{club.members.length}</td>
               <th>
-                <Link to={`/clubs/${club._id}`} className="btn btn-ghost btn-xs">Details</Link>
+                <Link
+                  to={`/clubs/${club._id}`}
+                  className="btn btn-ghost btn-xs"
+                >
+                  Details
+                </Link>
               </th>
               <th>
-                <Link to={`/dashboard/edit-clubs/${club._id}`} className="btn btn-primary">Edit</Link>
+                <Link
+                  to={`/dashboard/edit-clubs/${club._id}`}
+                  className="btn btn-secondary"
+                >
+                  Edit
+                </Link>
+              </th>
+              <th>
+                <button
+                  onClick={() => handleDeleteClub(club._id)}
+                  className="btn btn-primary"
+                >
+                  Delete
+                </button>
               </th>
             </tr>
           ))}

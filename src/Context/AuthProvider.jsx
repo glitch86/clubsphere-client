@@ -7,15 +7,17 @@ import {
 import React, { useEffect, useState } from "react";
 import { auth } from "../FIrebase/sdk";
 import { AuthContext } from "./AuthContext";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import axios from "axios";
+
+const axiosPublic = axios.create({
+  baseURL: "http://localhost:3000",
+});
 
 const googleAuth = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const axiosSecute = useAxiosSecure()
-
 
   // google login
   const googleSignIn = () => {
@@ -30,8 +32,8 @@ const AuthProvider = ({ children }) => {
 
   // add use to db
   const addUserToDB = async (newUser) => {
-    const { data: userInfo = {} } = await axiosSecute.post("/users", newUser);
-    console.log(userInfo);
+    const { data } = await axiosPublic.post("/users", newUser);
+    console.log(data);
   };
 
   const authInfo = {
@@ -40,7 +42,7 @@ const AuthProvider = ({ children }) => {
     loading,
     googleSignIn,
     signOutUser,
-    addUserToDB
+    addUserToDB,
   };
 
   useEffect(() => {

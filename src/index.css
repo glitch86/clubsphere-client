@@ -9,7 +9,7 @@
   name: "light";
 
   --color-primary: #bf0603;
-  /* --color-secondary: #4361ee; */
+  --color-secondary: #52b788;
 
   --color-base-100: #edf2f4;
 }
@@ -18,7 +18,7 @@
   name: "dark";
 
   --color-primary: #bf0603;
-  /* --color-secondary: #4361ee; */
+  --color-secondary: #52b788;
 
   --color-base-100: #333333;
   --color-base-200: #000000;
