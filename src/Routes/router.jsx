@@ -16,6 +16,9 @@ import AddClubs from "../Pages/AddClubs";
 import ModerateClubs from "../Pages/Dashboard/ModerateClubs";
 import EditClubs from "../Pages/EditClubs";
 import ErrorPage from "../Pages/ErrorPage";
+import ModerateEvents from "../Pages/Dashboard/ModerateEvents";
+import AddEvents from "../Pages/AddEvents";
+import EventsDetail from "../Pages/EventsDetail";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +43,10 @@ export const router = createBrowserRouter([
         Component: Events,
       },
       {
+        path: "/events/:id",
+        Component: EventsDetail,
+      },
+      {
         path: "/login",
         Component: Login,
       },
@@ -59,6 +66,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
+    errorElement: <ErrorPage></ErrorPage>,
     element: (
       <PrivateRoute>
         <DashboardLayout></DashboardLayout>
@@ -84,6 +92,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/edit-clubs/:id",
         Component: EditClubs,
+      },
+      {
+        path: "/dashboard/moderate-events",
+        Component: ModerateEvents,
+      },
+      {
+        path: "/dashboard/add-events",
+        Component: AddEvents,
       },
     ],
   },

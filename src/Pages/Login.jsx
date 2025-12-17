@@ -37,7 +37,7 @@ const Login = () => {
       .then((res) => {
         // console.log(res);
         setUser(res.user);
-        toast.success("Signin successful");
+        toast.success("Login successful");
         navigate(from);
       })
       .catch((e) => {
