@@ -5,11 +5,13 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/AuthContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const ClubCard = ({ club }) => {
   // console.log(club);
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   // getting club data
@@ -25,19 +27,26 @@ const ClubCard = ({ club }) => {
 
   // payment
   const handlePayment = async () => {
-    if(!user){
-      navigate('/login');
-      return
+    if (!user) {
+      navigate("/login");
+      return;
     }
+
     const clubInfo = {
       fee: parseInt(membershipFee),
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
     };
-    const updatedMembers = [...members];
+    const paymentInfo = {
+      type: "club",
+      clubInfo,
+    };
+    console.log(paymentInfo);
 
-    if (membershipFee === 0) {
+    const updatedMembers = [...members];
+    const fee = parseInt(membershipFee);
+    if (fee === 0) {
       toast.success(`You're a member of ${clubName}`);
 
       updatedMembers.push({
@@ -47,10 +56,11 @@ const ClubCard = ({ club }) => {
 
       return;
     }
-    // console.log(clubInfo)
-    const res = await axiosSecure.post("/payment-checkout-session", clubInfo);
+    const res = await axiosPublic.post(
+      "/payment-checkout-session",
+      paymentInfo
+    );
 
-    // console.log(res.data.url);
     window.location.assign(res.data.url);
   };
 
@@ -81,7 +91,6 @@ const ClubCard = ({ club }) => {
             View Details
           </Link>
 
-          
           <button
             onClick={() => handlePayment()}
             className="btn btn-outline flex-1 rounded-xl"

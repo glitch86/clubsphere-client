@@ -1,18 +1,37 @@
-import React, { useContext } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import React, { use } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useForm, useWatch } from "react-hook-form";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
 
-const AddEvents = () => {
-  const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure();
+const EditEvents = () => {
+  const { user } = use(AuthContext);
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
-  const { data: clubs = [], isLoading } = useQuery({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  //   fetch info
+  const { id } = useParams();
+  const { data: eventInfo = [], isLoading } = useQuery({
+    queryKey: ["eventInfo", id],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/events/${id}`);
+      return result.data;
+    },
+  });
+
+  //   fething clubs
+  const { data: clubs = [] } = useQuery({
     queryKey: ["clubs"],
     queryFn: async () => {
       const res = await axiosSecure.get("/clubs");
@@ -23,38 +42,29 @@ const AddEvents = () => {
 
   const myClubs = clubs.filter((club) => club.managerEmail === user.email);
 
-  //   console.log(myClubs);
+  const { mutate: updateEventInfo } = useMutation({
+    mutationFn: ({ id, data }) =>
+      axiosSecure.patch(`/events/${id}/update`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["eventInfo", id]);
+    },
+  });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm();
-
-  const handleForm = async (data) => {
-    // console.log(data);
-    const eventInfo = {
-      ...data, 
-      addedBy: user.email,
-      attendees: []
-    }
-    // console.log(eventInfo);
-
-    await axiosSecure.post("/events/add", eventInfo);
-    toast.success("Event Published.");
-
-    navigate("/events");
+  const handleUpdateEvent = (data) => {
+    // console.log(data)
+    updateEventInfo({ id, data });
+    toast.success("Event Updated")
+    navigate(-1);
   };
-  const isPaid = useWatch({ control, name: "isPaid" });
 
+  const isPaid = useWatch({ control, name: "isPaid" });
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
   return (
     <div>
       <div>
-        <form onSubmit={handleSubmit(handleForm)}>
+        <form onSubmit={handleSubmit(handleUpdateEvent)}>
           <div className="flex items-center gap-4">
             {/*  event name  */}
             <div className="">
@@ -63,6 +73,7 @@ const AddEvents = () => {
                 {...register("title", {
                   required: "Event name is required",
                 })}
+                defaultValue={eventInfo.title}
                 className="input input-bordered w-full"
               />
               {errors.eventName && (
@@ -76,7 +87,7 @@ const AddEvents = () => {
             <div>
               <label className="label font-medium">Select Club</label>
               <select
-                defaultValue={""}
+                defaultValue={eventInfo.clubId}
                 {...register("clubId", { required: "club is required" })}
                 className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
               >
@@ -102,6 +113,7 @@ const AddEvents = () => {
               className="textarea textarea-bordered w-full"
               rows={4}
               placeholder="Describe the event..."
+              defaultValue={eventInfo.description}
             />
           </div>
 
@@ -116,6 +128,7 @@ const AddEvents = () => {
                   required: "Event date is required",
                 })}
                 className="input input-bordered w-full"
+                defaultValue={eventInfo.eventDate}
               />
             </div>
             {/* Paid Event */}
@@ -124,6 +137,7 @@ const AddEvents = () => {
                 type="checkbox"
                 {...register("isPaid")}
                 className="checkbox"
+                defaultChecked={eventInfo.isPaid}
               />
               <label className="label-text">Paid Event</label>
             </div>
@@ -136,6 +150,7 @@ const AddEvents = () => {
                 {...register("location", { required: "Location is required" })}
                 className="input input-bordered w-full"
                 placeholder="Auditorium A"
+                defaultValue={eventInfo.location}
               />
             </div>
 
@@ -151,6 +166,7 @@ const AddEvents = () => {
                   })}
                   className="input input-bordered w-full"
                   placeholder="500"
+                  defaultValue={eventInfo.eventFee}
                 />
                 {errors.eventFee && (
                   <p className="text-sm text-red-500">
@@ -168,6 +184,7 @@ const AddEvents = () => {
               {...register("maxAttendees")}
               className="input input-bordered w-full"
               placeholder="100"
+              defaultValue={eventInfo.maxAttendees}
             />
           </div>
           <div className="pt-4 col-span-2">
@@ -181,4 +198,4 @@ const AddEvents = () => {
   );
 };
 
-export default AddEvents;
+export default EditEvents;

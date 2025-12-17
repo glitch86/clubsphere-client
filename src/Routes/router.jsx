@@ -19,6 +19,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import ModerateEvents from "../Pages/Dashboard/ModerateEvents";
 import AddEvents from "../Pages/AddEvents";
 import EventsDetail from "../Pages/EventsDetail";
+import EditEvents from "../Pages/EditEvents";
 
 export const router = createBrowserRouter([
   {
@@ -78,11 +79,11 @@ export const router = createBrowserRouter([
         Component: DashboardHome,
       },
       {
-        path: "/dashboard/manage-clubs",
+        path: "/dashboard/admin/manage-clubs",
         Component: ManageClubs,
       },
       {
-        path: "/dashboard/moderate-clubs",
+        path: "/dashboard/moderator/moderate-clubs",
         Component: ModerateClubs,
       },
       {
@@ -94,12 +95,16 @@ export const router = createBrowserRouter([
         Component: EditClubs,
       },
       {
-        path: "/dashboard/moderate-events",
+        path: "/dashboard/moderator/moderate-events",
         Component: ModerateEvents,
       },
       {
         path: "/dashboard/add-events",
         Component: AddEvents,
+      },
+      {
+        path: "/dashboard/edit-events/:id",
+        Component: EditEvents,
       },
     ],
   },

@@ -1,18 +1,23 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Hero from "../Components/ClubDetails/Hero";
 import Info from "../Components/ClubDetails/Info";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { AuthContext } from "../Context/AuthContext";
+import toast from "react-hot-toast";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const ClubDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   // console.log(id)
+  const navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();
+
+  const axiosPublic = useAxiosPublic();
   // console.log(axiosSecure)
   const { data: clubInfo = [], isLoading } = useQuery({
     queryKey: ["clubInfo", id],
@@ -22,24 +27,45 @@ const ClubDetails = () => {
     },
   });
 
-  const { _id, clubName, membershipFee } = clubInfo || {};
+  const { _id, clubName, membershipFee, members } = clubInfo || {};
 
   const handlePayment = async () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     const clubInfo = {
-      fee: membershipFee,
+      fee: parseInt(membershipFee),
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
-      // trackingId: club.trackingId,
     };
+    const paymentInfo = {
+      type: "club",
+      clubInfo,
+    };
+    console.log(paymentInfo);
 
-    // console.log(clubInfo)
-    const res = await axiosSecure.post("/payment-checkout-session", clubInfo);
+    const updatedMembers = [...members];
+    const fee = parseInt(membershipFee);
+    if (fee === 0) {
+      toast.success(`You're a member of ${clubName}`);
 
-    // console.log(res.data.url);
+      updatedMembers.push({
+        email: user.email,
+      });
+      axiosSecure.patch(`/clubs/${_id}/update`, { members: updatedMembers });
+
+      return;
+    }
+    const res = await axiosPublic.post(
+      "/payment-checkout-session",
+      paymentInfo
+    );
+
     window.location.assign(res.data.url);
   };
-
   //   console.log(clubInfo)
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;

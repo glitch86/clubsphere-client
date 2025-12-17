@@ -5,6 +5,8 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { Calendar, MapPin, Users, Ticket } from "lucide-react";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const EventsDetail = () => {
   const { id } = useParams();
@@ -12,6 +14,7 @@ const EventsDetail = () => {
   // console.log(id)
 
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   // console.log(axiosSecure)
   const { data: eventInfo = [], isLoading } = useQuery({
     queryKey: ["eventInfo", id],
@@ -31,10 +34,20 @@ const EventsDetail = () => {
     location,
     isPaid,
     eventFee,
+    attendees,
     maxAttendees,
   } = eventInfo || {};
 
   //  payment handling
+
+  const handleFreePayment = () => {
+    const updatedAttendees = [...attendees];
+    toast.success("payment successful");
+    updatedAttendees.push({
+      email: user.email,
+    });
+    axiosSecure.patch(`/events/${_id}/update`, { attendees: updatedAttendees });
+  };
 
   const handlePayment = async () => {
     const eventInfo = {
@@ -42,14 +55,21 @@ const EventsDetail = () => {
       eventId: _id,
       userEmail: user.email,
       clubName: clubName,
-      title: title
+      title: title,
       // trackingId: club.trackingId,
     };
-    const res = await axiosSecure.post("/payment-checkout-session", eventInfo);
+
+    const paymentInfo = {
+      type: "event",
+      eventInfo,
+    };
+    const res = await axiosPublic.post(
+      "/payment-checkout-session",
+      paymentInfo
+    );
 
     window.location.assign(res.data.url);
   };
-
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -77,22 +97,28 @@ const EventsDetail = () => {
 
       <p className=" leading-relaxed">{description}</p>
 
-      {isPaid ? (
-        user ? (
+      {user ? (
+        isPaid ? (
           <button
             onClick={handlePayment}
             className="btn btn-primary"
-            // disabled={members.some((member) => member.email === user.email)}
+            disabled={attendees.some((member) => member.email === user.email)}
           >
             Participate ${eventFee}
           </button>
         ) : (
-          <Link to={"/login"} className="btn btn-primary">
-            Login to Perticipate
-          </Link>
+          <button
+            onClick={handleFreePayment}
+            disabled={attendees.some((member) => member.email === user.email)}
+            className="font-semibold btn btn-primary"
+          >
+            Join for free
+          </button>
         )
       ) : (
-        <span className="font-semibold text-blue-600">Free Event</span>
+        <Link to={"/login"} className="btn btn-primary">
+          Login to Perticipate
+        </Link>
       )}
     </div>
   );

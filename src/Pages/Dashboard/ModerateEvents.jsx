@@ -2,7 +2,12 @@ import React from "react";
 import { motion } from "motion/react";
 import { IoIosAddCircle } from "react-icons/io";
 import { Link } from "react-router";
+import EventModTable from "../../Components/Dashboard/EventModTable";
 const ModerateEvents = () => {
+
+
+
+
   return (
     <div>
       mod events
@@ -17,6 +22,8 @@ const ModerateEvents = () => {
           </div>
         </Link>{" "}
       </motion.div>
+
+      <EventModTable></EventModTable>
     </div>
   );
 };

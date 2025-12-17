@@ -6,7 +6,7 @@ const Hero = ({ clubInfo, handlePayment }) => {
   const { user } = useContext(AuthContext);
   const { bannerImage, clubName, description, members } = clubInfo || {};
 
-  console.log(clubInfo);
+  // console.log(clubInfo);
   return (
     <div className="hero  bg-base-200 rounded-2xl items-center py-9 px-8">
       <div className="hero-content w-full items-start flex-col md:flex-row-reverse">

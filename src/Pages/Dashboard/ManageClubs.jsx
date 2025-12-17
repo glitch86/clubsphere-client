@@ -6,9 +6,6 @@ const ManageClubs = () => {
 
   return (
     <div>
-      <Link to={"/dashboard/add-clubs"} className="btns">
-        add
-      </Link>
       <ClubTable></ClubTable>
     </div>
   );
