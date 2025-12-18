@@ -4,13 +4,8 @@ import { IoIosAddCircle } from "react-icons/io";
 import { Link } from "react-router";
 import EventModTable from "../../Components/Dashboard/EventModTable";
 const ModerateEvents = () => {
-
-
-
-
   return (
     <div>
-      mod events
       <motion.div
         whileHover={{ y: -2 }}
         transition={{ type: "spring", stiffness: 800 }}

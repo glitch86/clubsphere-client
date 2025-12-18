@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +6,7 @@ import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { Calendar, MapPin, Users, Ticket } from "lucide-react";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { Link, useParams } from "react-router";
 
 const EventsDetail = () => {
   const { id } = useParams();
@@ -27,6 +27,7 @@ const EventsDetail = () => {
 
   const {
     _id,
+    clubId,
     clubName,
     title,
     description,
@@ -37,14 +38,14 @@ const EventsDetail = () => {
     attendees,
     maxAttendees,
   } = eventInfo || {};
-
+// console.log(eventInfo)
   //  payment handling
 
   const handleFreePayment = () => {
     const updatedAttendees = [...attendees];
     toast.success("payment successful");
     updatedAttendees.push({
-      email: user.email,
+      email: user?.email,
     });
     axiosSecure.patch(`/events/${_id}/update`, { attendees: updatedAttendees });
   };
@@ -53,11 +54,13 @@ const EventsDetail = () => {
     const eventInfo = {
       fee: eventFee,
       eventId: _id,
-      userEmail: user.email,
-      clubName: clubName,
+      clubName,
+      userEmail: user?.email,
+      clubId,
       title: title,
       // trackingId: club.trackingId,
     };
+    // console.log(eventInfo)
 
     const paymentInfo = {
       type: "event",
@@ -77,7 +80,7 @@ const EventsDetail = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-6">
-      <span className="text-sm ">{clubName}</span>
+      <span className="text-sm">{clubName}</span>
 
       <h1 className="text-3xl font-bold">{title}</h1>
 
@@ -102,14 +105,14 @@ const EventsDetail = () => {
           <button
             onClick={handlePayment}
             className="btn btn-primary"
-            disabled={attendees.some((member) => member.email === user.email)}
+            disabled={attendees.some((member) => member.email === user?.email)}
           >
             Participate ${eventFee}
           </button>
         ) : (
           <button
             onClick={handleFreePayment}
-            disabled={attendees.some((member) => member.email === user.email)}
+            disabled={attendees.some((member) => member.email === user?.email)}
             className="font-semibold btn btn-primary"
           >
             Join for free

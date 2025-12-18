@@ -25,7 +25,7 @@ const Register = () => {
   } = useForm();
 
   // sign up with email and pass
-  const handleSignUp = (data) => {
+  const handleSignUp = async (data) => {
     const displayName = data?.name;
     const photoURL = data?.photoURL;
     const email = data?.email;
@@ -38,42 +38,50 @@ const Register = () => {
     };
 
     // console.log(displayName, url, email, password);
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        // add user in database
-        addUserToDB(newUser);
+      // add user in database
+      try {
+        await addUserToDB(newUser);
+      } catch (err) {
+        console.error("failed to add user to DB:", err);
+        toast.error("failed to add user to database");
+      }
 
-        updateProfile(res.user, { displayName, photoURL })
-          .then(() => {
-            setUser(res.user);
-            navigate(from);
-            toast.success("Registration Successful.");
-          })
-          .catch((err) => toast.error(err));
-      })
-      .catch((err) => toast.error(err.message));
+      await updateProfile(res.user, { displayName, photoURL });
+
+      setUser(res.user);
+      navigate(from);
+      toast.success("Registration Successful.");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   // continue with google
-  const handleGoogleSignin = () => {
-    googleSignIn()
-      .then((res) => {
-        // add user in database
-        const newUser = {
-          displayName: res.user.displayName,
-          email: res.user.email,
-          photoURL: res.user.photoURL,
-        };
-        addUserToDB(newUser);
+  const handleGoogleSignin = async () => {
+    try {
+      const res = await googleSignIn();
+      const newUser = {
+        displayName: res.user.displayName,
+        email: res.user.email,
+        photoURL: res.user.photoURL,
+      };
 
-        // .then((data) => toast.error(data.message));
+      try {
+        await addUserToDB(newUser);
+      } catch (err) {
+        console.error(err);
+        toast.error("failed to add user to database");
+      }
 
-        setUser(res.user);
-        navigate(from);
-        toast.success("Registration Successful.");
-      })
-      .catch((err) => console.log(err));
+      setUser(res.user);
+      navigate(from);
+      toast.success("Registration Successful.");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // img preview
@@ -82,9 +90,7 @@ const Register = () => {
 
   return (
     <div>
-      <h1 className="heading text-center">
-        Register
-      </h1>
+      <h1 className="heading text-center">Register</h1>
       <div className="hero  min-h-screen">
         <div className="hero-content  flex-col lg:flex-row md:gap-40">
           <img className="rounded-2xl" src={imgURL || dummy} alt="" />

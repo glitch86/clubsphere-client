@@ -34,11 +34,13 @@ const AddEvents = () => {
 
   const handleForm = async (data) => {
     // console.log(data);
+    const selectedClub = myClubs.find((club) => club._id === data.clubId);
     const eventInfo = {
-      ...data, 
+      ...data,
+      clubName: selectedClub.clubName,
       addedBy: user.email,
-      attendees: []
-    }
+      attendees: [],
+    };
     // console.log(eventInfo);
 
     await axiosSecure.post("/events/add", eventInfo);

@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { MdEventNote } from "react-icons/md";
+import { FaUserAstronaut } from "react-icons/fa";
+import { Bitcoin } from "lucide-react";
 
 const DashboardLayout = () => {
   const theme = localStorage.getItem("theme") || "light";
@@ -88,7 +90,7 @@ const DashboardLayout = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="manage clubs"
               >
-                {/* Settings icon */}
+                {/* manage clubs */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -105,6 +107,28 @@ const DashboardLayout = () => {
                   <circle cx="7" cy="7" r="3"></circle>
                 </svg>
                 <span className="is-drawer-close:hidden">Manage Clubs</span>
+              </NavLink>
+            </li>
+                {/* manage users */}
+            <li>
+              <NavLink
+                to={"/dashboard/admin/manage-users"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="manage users"
+              >
+                <FaUserAstronaut />
+                <span className="is-drawer-close:hidden">Manage users</span>
+              </NavLink>
+            </li>
+            {/* admin payments  */}
+            <li>
+              <NavLink
+                to={"/dashboard/admin/payments"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="payments"
+              >
+                <Bitcoin size={19}></Bitcoin>
+                <span className="is-drawer-close:hidden">Payments</span>
               </NavLink>
             </li>
 

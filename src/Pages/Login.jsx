@@ -47,21 +47,24 @@ const Login = () => {
   };
 
   // google sign in
-  const handleGoogleSignin = () => {
-    googleSignIn()
-      .then((res) => {
-        setUser(res.user);
-        const newUser = {
-          displayName: res.user.displayName,
-          email: res.user.email,
-          photoURL: res.user.photoURL,
-        };
-        addUserToDB(newUser);
-        
-        navigate(from);
-        toast.success("Login Successful");
-      })
-      .catch((err) => console.log(err));
+  const handleGoogleSignin = async () => {
+    try {
+      const res = await googleSignIn();
+
+      const newUser = {
+        displayName: res.user.displayName,
+        email: res.user.email,
+        photoURL: res.user.photoURL,
+      };
+      await addUserToDB(newUser);
+
+      setUser(res.user);
+      navigate(from);
+      toast.success("Login Successful");
+    } catch (err) {
+      console.error(err);
+      toast.error("login failed");
+    }
   };
   return (
     <div className="flex flex-col justify-center items-center h-screen">

@@ -20,6 +20,9 @@ import ModerateEvents from "../Pages/Dashboard/ModerateEvents";
 import AddEvents from "../Pages/AddEvents";
 import EventsDetail from "../Pages/EventsDetail";
 import EditEvents from "../Pages/EditEvents";
+import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import Payments from "../Pages/Dashboard/Payments";
+import EventReg from "../Pages/Dashboard/EventReg";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +86,14 @@ export const router = createBrowserRouter([
         Component: ManageClubs,
       },
       {
+        path: "/dashboard/admin/manage-users",
+        Component: ManageUsers,
+      },
+      {
+        path: "/dashboard/admin/payments",
+        Component: Payments,
+      },
+      {
         path: "/dashboard/moderator/moderate-clubs",
         Component: ModerateClubs,
       },
@@ -105,6 +116,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/edit-events/:id",
         Component: EditEvents,
+      },
+      {
+        path: "/dashboard/moderator/event-registrations",
+        Component: EventReg,
       },
     ],
   },
