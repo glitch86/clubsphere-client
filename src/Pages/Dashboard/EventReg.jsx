@@ -23,10 +23,10 @@ const EventReg = () => {
     },
   });
 
-  const registrations = regs.filter((reg) => reg.eventId === eventId);
+  const registrations = regs.filter((reg) => eventId && reg.eventId === eventId);
 
   const myEvents = events.filter((event) => event.addedBy === user.email);
-  console.log(registrations);
+  // console.log(registrations);
 
   
 
@@ -39,13 +39,14 @@ const EventReg = () => {
         <label className="label font-medium">Select Event</label>
         <select
           defaultValue={""}
+          onChange={(e) => setEventId(e.target.value)}
           className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
         >
           <option value="" disabled>
             Select Event
           </option>
           {myEvents.map((event) => (
-            <option key={event._id} onClick={() => setEventId(event._id)}>
+            <option key={event._id}  value={event._id}>
               {event.title}
             </option>
           ))}
