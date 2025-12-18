@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { MdEventNote } from "react-icons/md";
 import { FaUserAstronaut } from "react-icons/fa";
-import { Bitcoin, Form, History, User } from "lucide-react";
+import { Bitcoin, Form, History, User, Users } from "lucide-react";
 
 const DashboardLayout = () => {
   const theme = localStorage.getItem("theme") || "light";
@@ -194,6 +194,19 @@ const DashboardLayout = () => {
                 <Form size={19}></Form>
                 <span className="is-drawer-close:hidden">
                   Event Registrations
+                </span>
+              </NavLink>
+            </li>
+            {/* my clubs */}
+            <li>
+              <NavLink
+                to={"/dashboard/user/my-clubs"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="my clubs"
+              >
+                <Users size={19}></Users>
+                <span className="is-drawer-close:hidden">
+                  My Clubs
                 </span>
               </NavLink>
             </li>

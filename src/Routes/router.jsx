@@ -26,6 +26,7 @@ import EventReg from "../Pages/Dashboard/EventReg";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import MyEvents from "../Pages/Dashboard/MyEvents";
 import ClubMembers from "../Pages/Dashboard/ClubMembers";
+import MyClubs from "../Pages/Dashboard/MyClubs";
 
 export const router = createBrowserRouter([
   {
@@ -127,6 +128,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/moderator/event-registrations",
         Component: EventReg,
+      },
+      {
+        path: "/dashboard/user/my-clubs",
+        Component: MyClubs,
       },
       {
         path: "/dashboard/user/my-events",
