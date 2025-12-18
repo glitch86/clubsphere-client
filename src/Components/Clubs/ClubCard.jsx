@@ -21,6 +21,7 @@ const ClubCard = ({ club }) => {
     clubName,
     description,
     membershipFee,
+    managerEmail,
     status,
     members,
   } = club;
@@ -37,12 +38,13 @@ const ClubCard = ({ club }) => {
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
+      managerEmail,
     };
     const paymentInfo = {
       type: "club",
       clubInfo,
     };
-    console.log(paymentInfo);
+    // console.log(paymentInfo);
 
     const updatedMembers = [...members];
     const fee = parseInt(membershipFee);

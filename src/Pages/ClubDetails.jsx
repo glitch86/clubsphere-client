@@ -27,7 +27,8 @@ const ClubDetails = () => {
     },
   });
 
-  const { _id, clubName, membershipFee, members } = clubInfo || {};
+  const { _id, clubName, membershipFee, members, managerEmail } =
+    clubInfo || {};
 
   const handlePayment = async () => {
     if (!user) {
@@ -40,12 +41,13 @@ const ClubDetails = () => {
       clubId: _id,
       userEmail: user.email,
       clubName: clubName,
+      managerEmail,
     };
     const paymentInfo = {
       type: "club",
       clubInfo,
     };
-    console.log(paymentInfo);
+    // console.log(paymentInfo);
 
     const updatedMembers = [...members];
     const fee = parseInt(membershipFee);

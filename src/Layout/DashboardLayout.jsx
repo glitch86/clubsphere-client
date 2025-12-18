@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { MdEventNote } from "react-icons/md";
 import { FaUserAstronaut } from "react-icons/fa";
-import { Bitcoin } from "lucide-react";
+import { Bitcoin, Form, History, User } from "lucide-react";
 
 const DashboardLayout = () => {
   const theme = localStorage.getItem("theme") || "light";
@@ -109,7 +109,7 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Manage Clubs</span>
               </NavLink>
             </li>
-                {/* manage users */}
+            {/* manage users */}
             <li>
               <NavLink
                 to={"/dashboard/admin/manage-users"}
@@ -159,6 +159,19 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
+            {/* club members */}
+            <li>
+              <NavLink
+                to={"/dashboard/moderator/club-members"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="club members"
+              >
+                {/* Settings icon */}
+               <User size={19}></User>
+                <span className="is-drawer-close:hidden">Club Members</span>
+              </NavLink>
+            </li>
+
             {/* moderate events */}
             <li>
               <NavLink
@@ -167,8 +180,47 @@ const DashboardLayout = () => {
                 data-tip="moderate events"
               >
                 {/* Settings icon */}
-                <MdEventNote size={18}/>
+                <MdEventNote size={18} />
                 <span className="is-drawer-close:hidden">Moderate events</span>
+              </NavLink>
+            </li>
+            {/* moderate reg */}
+            <li>
+              <NavLink
+                to={"/dashboard/moderator/event-registrations"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="event registrations"
+              >
+                <Form size={19}></Form>
+                <span className="is-drawer-close:hidden">
+                  Event Registrations
+                </span>
+              </NavLink>
+            </li>
+            {/* my events */}
+            <li>
+              <NavLink
+                to={"/dashboard/user/my-events"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="my events"
+              >
+                <MdEventNote size={18} />
+                <span className="is-drawer-close:hidden">
+                  My Events
+                </span>
+              </NavLink>
+            </li>
+            {/* payment history */}
+            <li>
+              <NavLink
+                to={"/dashboard/user/payment-history"}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="payment history"
+              >
+                <History size={19}></History>
+                <span className="is-drawer-close:hidden">
+                  Payment history
+                </span>
               </NavLink>
             </li>
           </ul>

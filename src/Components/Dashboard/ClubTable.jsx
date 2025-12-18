@@ -3,6 +3,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../Shared/LoadingSpinner";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 const ClubTable = () => {
   // fetch data
@@ -29,6 +30,7 @@ const ClubTable = () => {
 
   const handleUpdateStatus = (status, id) => {
     updateStatus({ id, status });
+    toast.success(`Status updated to ${status}`);
   };
 
   if (isLoading) {

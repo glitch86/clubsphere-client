@@ -23,6 +23,9 @@ import EditEvents from "../Pages/EditEvents";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import Payments from "../Pages/Dashboard/Payments";
 import EventReg from "../Pages/Dashboard/EventReg";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import MyEvents from "../Pages/Dashboard/MyEvents";
+import ClubMembers from "../Pages/Dashboard/ClubMembers";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +101,10 @@ export const router = createBrowserRouter([
         Component: ModerateClubs,
       },
       {
+        path: "/dashboard/moderator/club-members",
+        Component: ClubMembers,
+      },
+      {
         path: "/dashboard/add-clubs",
         Component: AddClubs,
       },
@@ -120,6 +127,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/moderator/event-registrations",
         Component: EventReg,
+      },
+      {
+        path: "/dashboard/user/my-events",
+        Component: MyEvents,
+      },
+      {
+        path: "/dashboard/user/payment-history",
+        Component: PaymentHistory,
       },
     ],
   },

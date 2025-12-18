@@ -3,9 +3,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 
-const Payments = () => {
+const PaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
-  // console.log(axiosSecure)
   const { data: payments = [], isLoading } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
@@ -13,7 +12,8 @@ const Payments = () => {
       return result.data;
     },
   });
-  console.log(payments)
+  // console.log(payments);
+
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
@@ -23,11 +23,11 @@ const Payments = () => {
         {/* head */}
         <thead>
           <tr>
-            <th>User Email</th>
             <th>Club Name</th>
             <th>Amount</th>
             <th>Type</th>
-            <th>Created At</th>
+            <th>Status</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody className="bg-base-200">
@@ -35,12 +35,10 @@ const Payments = () => {
 
           {payments.map((data) => (
             <tr key={data._id}>
-              <td>{data.userEmail}</td>
-              <td>
-                {data?.clubName}
-              </td>
+              <td>{data?.clubName}</td>
               <td>{data.amount}</td>
               <td>{data.type}</td>
+              <td>{data.status}</td>
               <td>{data.createdAt}</td>
             </tr>
           ))}
@@ -50,4 +48,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default PaymentHistory;

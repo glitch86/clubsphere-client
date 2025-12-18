@@ -4,6 +4,8 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
 import LoadingSpinner from "../Shared/LoadingSpinner";
+import toast from "react-hot-toast";
+
 
 const EventModTable = () => {
   const { user } = useContext(AuthContext);
@@ -25,6 +27,7 @@ const EventModTable = () => {
   const deleteEvent = useMutation({
     mutationFn: (id) => {
       axiosSecure.delete(`/events/${id}`);
+      
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
@@ -33,6 +36,7 @@ const EventModTable = () => {
 
   const handleDeleteEvent = (id) => {
     deleteEvent.mutate(id);
+    toast.success("Event Deleted")
   };
 
   const myEvents = events.filter((event) => event.addedBy === user.email);
