@@ -19,7 +19,7 @@ const ClubTableMod = () => {
     },
   });
 
-  // delete queries
+  // delete clubs
   const deleteClub = useMutation({
     mutationFn: (id) => {
       axiosSecure.delete(`/clubs/${id}`);

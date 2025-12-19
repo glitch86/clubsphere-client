@@ -13,7 +13,7 @@ const Payments = () => {
       return result.data;
     },
   });
-  console.log(payments)
+  // console.log(payments)
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
