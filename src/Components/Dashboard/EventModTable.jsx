@@ -21,7 +21,7 @@ const EventModTable = () => {
     },
   });
 
-  console.log(events);
+  // console.log(events);
 
   // delete queries
   const deleteEvent = useMutation({
@@ -47,6 +47,14 @@ const EventModTable = () => {
   }
   return (
     <div className="overflow-x-auto">
+
+      {
+        myEvents.length === 0 && <>
+          <h1 className="text-center text-2xl">
+            add events
+          </h1>
+        </>
+      }
       <table className="table">
         {/* head */}
         <thead>

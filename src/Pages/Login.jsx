@@ -74,9 +74,9 @@ const Login = () => {
         </div>
         <form
           onSubmit={handleSubmit(handleSignin)}
-          className="fieldset rounded-box w-xs border border-gray-600 p-4 bg-black/10 backdrop-blur-sm shadow-sm"
+          className="fieldset rounded-box w-xs  p-4 bg-base-100 backdrop-blur-sm shadow-sm"
         >
-          <label className="label text-white">Email</label>
+          <label className="label ">Email</label>
           <input
             type="email"
             className="input"
@@ -90,7 +90,7 @@ const Login = () => {
           )}
 
           <div className="relative">
-            <label className="label text-white">Password</label>
+            <label className="label">Password</label>
             <input
               type={showPass ? "text" : "password"}
               className="input"
@@ -110,7 +110,7 @@ const Login = () => {
             </span>
           </div>
 
-          <span className="hover:underline cursor-pointer text-gray-300">
+          <span className="hover:underline cursor-pointer ">
             <Link>Forget Password</Link>
           </span>
 
@@ -128,11 +128,11 @@ const Login = () => {
             />
             Continue with Google
           </button>
-          <p className="text-center text-sm text-white mt-3">
+          <p className="text-center text-sm mt-3">
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="text-white hover:text-black hover:bg-white  underline"
+              className=" hover:text-black hover:bg-white  underline"
             >
               Sign up
             </Link>

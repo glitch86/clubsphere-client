@@ -7,7 +7,6 @@ import Info from "../Components/ClubDetails/Info";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { AuthContext } from "../Context/AuthContext";
 import toast from "react-hot-toast";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const ClubDetails = () => {
   const { id } = useParams();
@@ -17,7 +16,6 @@ const ClubDetails = () => {
 
   const axiosSecure = useAxiosSecure();
 
-  const axiosPublic = useAxiosPublic();
   // console.log(axiosSecure)
   const { data: clubInfo = [], isLoading } = useQuery({
     queryKey: ["clubInfo", id],
@@ -61,7 +59,7 @@ const ClubDetails = () => {
 
       return;
     }
-    const res = await axiosPublic.post(
+    const res = await axiosSecure.post(
       "/payment-checkout-session",
       paymentInfo
     );

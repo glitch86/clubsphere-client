@@ -27,6 +27,8 @@ import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import MyEvents from "../Pages/Dashboard/MyEvents";
 import ClubMembers from "../Pages/Dashboard/ClubMembers";
 import MyClubs from "../Pages/Dashboard/MyClubs";
+import AdminRoute from "./AdminRoute";
+import ModRoute from "./ModRoute";
 
 export const router = createBrowserRouter([
   {
@@ -87,47 +89,91 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/admin/manage-clubs",
-        Component: ManageClubs,
+        element: (
+          <AdminRoute>
+            <ManageClubs></ManageClubs>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/admin/manage-users",
-        Component: ManageUsers,
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/admin/payments",
-        Component: Payments,
+        element: (
+          <AdminRoute>
+            <Payments></Payments>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/moderator/moderate-clubs",
-        Component: ModerateClubs,
+        element: (
+          <ModRoute>
+            <ModerateClubs></ModerateClubs>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/moderator/club-members",
-        Component: ClubMembers,
+        element: (
+          <ModRoute>
+            <ClubMembers></ClubMembers>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/add-clubs",
-        Component: AddClubs,
+        element: (
+          <ModRoute>
+            <AddClubs></AddClubs>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/edit-clubs/:id",
-        Component: EditClubs,
+        element: (
+          <ModRoute>
+            <EditClubs></EditClubs>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/moderator/moderate-events",
-        Component: ModerateEvents,
+        element: (
+          <ModRoute>
+            <ModerateEvents></ModerateEvents>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/add-events",
-        Component: AddEvents,
+        element: (
+          <ModRoute>
+            <AddEvents></AddEvents>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/edit-events/:id",
-        Component: EditEvents,
+        element: (
+          <ModRoute>
+            <EditEvents></EditEvents>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/moderator/event-registrations",
-        Component: EventReg,
+        element: (
+          <ModRoute>
+            <EventReg></EventReg>
+          </ModRoute>
+        ),
       },
       {
         path: "/dashboard/user/my-clubs",

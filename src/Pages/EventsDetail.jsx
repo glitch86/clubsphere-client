@@ -4,7 +4,6 @@ import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import { Calendar, MapPin, Users, Ticket } from "lucide-react";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
 import { Link, useParams } from "react-router";
 
@@ -14,7 +13,6 @@ const EventsDetail = () => {
   // console.log(id)
 
   const axiosSecure = useAxiosSecure();
-  const axiosPublic = useAxiosPublic();
   // console.log(axiosSecure)
   const { data: eventInfo = [], isLoading } = useQuery({
     queryKey: ["eventInfo", id],
@@ -66,7 +64,7 @@ const EventsDetail = () => {
       type: "event",
       eventInfo,
     };
-    const res = await axiosPublic.post(
+    const res = await axiosSecure.post(
       "/payment-checkout-session",
       paymentInfo
     );

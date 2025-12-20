@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Calendar, Users } from "lucide-react";
 import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
+import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 
 const MemberOverview = () => {
   const { user } = useContext(AuthContext);
@@ -35,6 +36,9 @@ const MemberOverview = () => {
 
   const filteredRegs = regs.filter((reg) => reg.userEmail === user.email);
 
+  if (isLoading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
   return (
     <div className="p-6 space-y-6">
       {/* welcome Section */}

@@ -8,7 +8,7 @@ import LoadingSpinner from "../../Components/Shared/LoadingSpinner";
 
 const Dashboard = () => {
   const { role, roleLoading } = useRole();
-  // console.log(role);
+  console.log(role);
 
   if (roleLoading) {
     return <LoadingSpinner></LoadingSpinner>;

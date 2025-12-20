@@ -5,13 +5,11 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { AuthContext } from "../../Context/AuthContext";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const ClubCard = ({ club }) => {
   // console.log(club);
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
-  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   // getting club data
@@ -58,7 +56,7 @@ const ClubCard = ({ club }) => {
 
       return;
     }
-    const res = await axiosPublic.post(
+    const res = await axiosSecure.post(
       "/payment-checkout-session",
       paymentInfo
     );

@@ -15,7 +15,7 @@ const EventReg = () => {
       return result.data;
     },
   });
-  const { data: regs = [] } = useQuery({
+  const { data: regs = [], isLoading: regLoading } = useQuery({
     queryKey: ["registrations"],
     queryFn: async () => {
       const result = await axiosSecure.get("/registrations");
@@ -30,7 +30,7 @@ const EventReg = () => {
 
   
 
-  if (isLoading) {
+  if (isLoading || regLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
   return (

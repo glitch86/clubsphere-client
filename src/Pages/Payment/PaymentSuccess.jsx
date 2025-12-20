@@ -1,10 +1,22 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { motion } from "motion/react";
 import { BadgeCheck } from "lucide-react";
 import { GoHome } from "react-icons/go";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useEffect } from "react";
 
 const PaymentSuccess = () => {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const axiosSecure = useAxiosSecure();
+  // console.log(sessionId)
+
+  useEffect(() => {
+    if (sessionId) {
+      axiosSecure.patch(`/payment-success?session_id=${sessionId}`);
+    }
+  }, [sessionId, axiosSecure]);
   return (
     <div className="flex justify-center items-center h-3/5">
       <div className="text-center">
