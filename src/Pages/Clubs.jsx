@@ -1,34 +1,21 @@
-import React from "react";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 import ClubCard from "../Components/Clubs/ClubCard";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import ClubHero from "../Components/Clubs/ClubHero";
+import ClubCardContainer from "../Components/Clubs/ClubCardContainer";
 
 const Clubs = () => {
-  const axiosSecure = useAxiosSecure();
-  // console.log(axiosSecure)
-  const { data: clubs = [], isLoading } = useQuery({
-    queryKey: ["clubs"],
-    queryFn: async () => {
-      const result = await axiosSecure.get("/clubs");
-      return result.data;
-    },
-  });
-
+  const [searchText, setSearchText] = useState();
   //   console.log(clubs);
 
-  if (isLoading) {
-    return <LoadingSpinner></LoadingSpinner>;
-  }
+  const handleSearch = (e) => {
+    // e.preventDefault();
+    setSearchText(e.target.value);
+  };
   return (
     <div className="my-8">
-      <ClubHero></ClubHero>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
-        {clubs.map((club) => (
-          <ClubCard key={club._id} club={club}></ClubCard>
-        ))}
-      </div>
+      <ClubHero handleSearch={handleSearch}></ClubHero>
+      <ClubCardContainer searchText={searchText}></ClubCardContainer>
     </div>
   );
 };

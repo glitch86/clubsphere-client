@@ -1,29 +1,40 @@
-import React from "react";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
 import EventCard from "../Components/Events/EventCard";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
+import { FaSearch } from "react-icons/fa";
+import EventCardContainer from "../Components/Events/EventCardContainer";
 
 const Events = () => {
   // fetch data
-  const axiosSecure = useAxiosSecure();
-  const { data: events = [], isLoading } = useQuery({
-    queryKey: ["clubs"],
-    queryFn: async () => {
-      const result = await axiosSecure.get("/events");
-      return result.data;
-    },
-  });
-  if (isLoading) {
-    return <LoadingSpinner></LoadingSpinner>;
-  }
+
+  const [searchText, setSearchText] = useState();
+  
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+
   return (
     <div className="my-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {events.map((event) => (
-          <EventCard key={event._id} event={event}></EventCard>
-        ))}
+      <div className="flex justify-end my-6">
+        <div className=" md:block ">
+          {/* <p>{searchText} search</p> */}
+          <label className="input join-item bg-black">
+            {" "}
+            <input
+              onChange={handleSearch}
+              type="search"
+              className=" text-white "
+              placeholder="search for events"
+              required
+            />{" "}
+          </label>
+        </div>
+        <button type="button" className="btn btn-primary join-item">
+          <FaSearch size={17} />
+        </button>
       </div>
+      <EventCardContainer searchText={searchText}></EventCardContainer>
     </div>
   );
 };

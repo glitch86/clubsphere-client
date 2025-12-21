@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { motion } from "motion/react";
 
-const ClubHero = () => {
+const ClubHero = ({ handleSearch }) => {
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   setSearchText(e.target.value);
+  // };
   return (
     <div className="flex justify-center flex-col items-center ">
       <div className="relative overflow-hidden py-32 w-full ">
@@ -32,11 +36,19 @@ const ClubHero = () => {
 
           <div className="flex">
             <div className=" md:block ">
+              {/* <p>{searchText} search</p> */}
               <label className="input join-item bg-black">
-                <input className=" text-white " placeholder="search for clubs" required />
+                {" "}
+                <input
+                  onChange={handleSearch}
+                  type="search"
+                  className=" text-white "
+                  placeholder="search for clubs"
+                  required
+                />{" "}
               </label>
             </div>
-            <button className="btn btn-primary join-item">
+            <button type="button" className="btn btn-primary join-item">
               <FaSearch size={17} />
             </button>
           </div>
