@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
     if (sessionId) {
       axiosSecure.patch(`/payment-success?session_id=${sessionId}`);
     }
-  }, [sessionId, axiosSecure]);
+  }, [sessionId]);
   return (
     <div className="flex justify-center items-center h-3/5">
       <div className="text-center">
