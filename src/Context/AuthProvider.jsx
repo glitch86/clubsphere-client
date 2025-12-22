@@ -10,8 +10,8 @@ import { AuthContext } from "./AuthContext";
 import axios from "axios";
 
 const axiosPublic = axios.create({
-  // baseURL: "https://clubsphere-server.vercel.app",
-  baseURL: "http://localhost:3000",
+  baseURL: "https://clubsphere-server.vercel.app",
+  // baseURL: "http://localhost:3000",
 });
 
 const googleAuth = new GoogleAuthProvider();

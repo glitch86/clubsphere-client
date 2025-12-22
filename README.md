@@ -1,16 +1,24 @@
-# React + Vite
+# ClubSphere
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ClubSphere is a friendly page to find club and events around you. Meet new people and plan hangouts. Interact with millions of users while having secured user privacy. 
 
-Currently, two official plugins are available:
+## Live url
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://clubshpere86.netlify.app
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Key Features
 
-## Expanding the ESLint configuration
+- search clubs and events
+- filter by category 
+- sort to find best results
+- smooth animations
+- user friendly dashboard
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## npm packages
+
+- axios v-1.13.2
+- firebase v-12.6.0
+- react-router v-7.10.1
+- react-hook-form v-7.68.0
+
