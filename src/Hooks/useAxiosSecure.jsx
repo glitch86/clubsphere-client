@@ -3,8 +3,8 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 
 const axiosSecure = axios.create({
-  baseURL: "https://clubsphere-server.vercel.app",
-  // baseURL: "http://localhost:3000", 
+  // baseURL: "https://clubsphere-server.vercel.app",
+  baseURL: "http://localhost:3000", 
 });
 
 const useAxiosSecure = () => {

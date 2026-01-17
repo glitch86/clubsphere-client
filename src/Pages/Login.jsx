@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 const Login = () => {
   const { setUser, googleSignIn, addUserToDB } = useContext(AuthContext);
   const [showPass, setShowPass] = useState(false);
+  // const [userEmail, setUserEmail] = useState();
 
   const location = useLocation();
   const from = location.state || "/";
@@ -23,6 +24,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -64,6 +66,22 @@ const Login = () => {
     } catch (err) {
       console.error(err);
       toast.error("login failed");
+    }
+  };
+
+  // autofill signin
+  const handleAutofill = (role) => {
+    if (role === "admin") {
+      setValue("email", "admin@gmail.com");
+      setValue("password", "Admin@123");
+    }
+    if (role === "mod") {
+      setValue("email", "mod@gmail.com");
+      setValue("password", "Mod@123");
+    }
+    if (role === "user") {
+      setValue("email", "user@gmail.com");
+      setValue("password", "User@123");
     }
   };
   return (
@@ -113,6 +131,21 @@ const Login = () => {
           <span className="hover:underline cursor-pointer ">
             <Link>Forget Password</Link>
           </span>
+
+          {/* autofill */}
+          <label className="label">Autofill</label>
+
+          <div className="flex justify-between">
+            <button onClick={() => handleAutofill("admin")} className="btn">
+              Admin
+            </button>
+            <button onClick={() => handleAutofill("mod")} className="btn">
+              Moderator
+            </button>
+            <button onClick={() => handleAutofill("user")} className="btn">
+              User
+            </button>
+          </div>
 
           <button className="btn btn-neutral mt-4">Login</button>
           <div className="divider">OR</div>
