@@ -4,13 +4,14 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import EventCard from "./EventCard";
 
-const EventCardContainer = ({searchText}) => {
+const EventCardContainer = ({ searchText, paid }) => {
   const axiosSecure = useAxiosSecure();
   const { data: events = [], isLoading } = useQuery({
-    queryKey: ["clubs", searchText],
+    queryKey: ["clubs", searchText, paid],
     queryFn: async () => {
       const result = await axiosSecure.get(
-        `/events?searchText=${searchText || ""}`
+        `/events?searchText=${searchText || ""}`,
+        { params: { paid } },
       );
       return result.data;
     },

@@ -65,6 +65,14 @@ const NavBar = () => {
           Events
         </motion.p>
       </NavLink>
+      <NavLink to="/about" className="mr-5">
+        <motion.p
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 12 }}
+        >
+          About us
+        </motion.p>
+      </NavLink>
       <NavLink to="/dashboard" className={`mr-5  ${user ? "block" : "hidden"}`}>
         <motion.p
           whileHover={{ y: -2 }}
@@ -140,7 +148,6 @@ const NavBar = () => {
         </div>
 
         <div className="navbar-end">
-    
           <ThemeToggle></ThemeToggle>
 
           {loading ? (

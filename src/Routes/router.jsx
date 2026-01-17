@@ -29,6 +29,7 @@ import ClubMembers from "../Pages/Dashboard/ClubMembers";
 import MyClubs from "../Pages/Dashboard/MyClubs";
 import AdminRoute from "./AdminRoute";
 import ModRoute from "./ModRoute";
+import About from "../Pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: "/events",
         Component: Events,
+      },
+      {
+        path: "/about",
+        Component: About,
       },
       {
         path: "/events/:id",

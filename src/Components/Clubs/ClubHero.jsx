@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { motion } from "motion/react";
 
-const ClubHero = ({ handleSearch }) => {
+const ClubHero = ({ handleSearch, category, setCategory }) => {
   // const handleSearch = (e) => {
   //   e.preventDefault();
   //   setSearchText(e.target.value);
@@ -51,6 +51,23 @@ const ClubHero = ({ handleSearch }) => {
             <button type="button" className="btn btn-primary join-item">
               <FaSearch size={17} />
             </button>
+          </div>
+
+          <div className="flex gap-3 mb-5">
+            {/* category Filter */}
+            <select
+              className="select select-bordered"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">All Category</option>
+              <option value="Photography">Photography</option>
+              <option value="Tech">Tech</option>
+              <option value="Books">Books</option>
+              <option value="Art">Art</option>
+              <option value="Sports">Sports</option>
+              <option value="Gaming">Gaming</option>
+            </select>
           </div>
         </div>
       </div>

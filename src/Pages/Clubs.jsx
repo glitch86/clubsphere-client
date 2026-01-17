@@ -6,7 +6,8 @@ import ClubCardContainer from "../Components/Clubs/ClubCardContainer";
 
 const Clubs = () => {
   const [searchText, setSearchText] = useState();
-  //   console.log(clubs);
+  const [category, setCategory] = useState();
+    console.log(category);
 
   const handleSearch = (e) => {
     // e.preventDefault();
@@ -14,8 +15,12 @@ const Clubs = () => {
   };
   return (
     <div className="my-8">
-      <ClubHero handleSearch={handleSearch}></ClubHero>
-      <ClubCardContainer searchText={searchText}></ClubCardContainer>
+      <ClubHero
+        handleSearch={handleSearch}
+        category={category}
+        setCategory={setCategory}
+      ></ClubHero>
+      <ClubCardContainer searchText={searchText} category={category}></ClubCardContainer>
     </div>
   );
 };

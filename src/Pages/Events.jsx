@@ -8,11 +8,11 @@ const Events = () => {
   // fetch data
 
   const [searchText, setSearchText] = useState();
-  
+  const [paid, setPaid] = useState();
+
   const handleSearch = (e) => {
     setSearchText(e.target.value);
   };
-
 
   return (
     <div className="my-8">
@@ -34,7 +34,24 @@ const Events = () => {
           <FaSearch size={17} />
         </button>
       </div>
-      <EventCardContainer searchText={searchText}></EventCardContainer>
+      <div>
+        <div className="flex gap-3 mb-5">
+          {/* Genre Filter */}
+          <select
+            className="select select-bordered"
+            value={paid}
+            onChange={(e) => setPaid(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value={true}>Paid</option>
+            <option value={false}>Free</option>
+          </select>
+        </div>
+      </div>
+      <EventCardContainer
+        searchText={searchText}
+        paid={paid}
+      ></EventCardContainer>
     </div>
   );
 };

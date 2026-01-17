@@ -26,14 +26,14 @@ const Footer = () => {
       <nav>
         <h6 className="footer-title">Social</h6>
         <div className="grid grid-flow-col gap-4">
-          <a>
-           <FaGithub size={34} />
+          <a href="https://github.com/glitch86" target="_blank">
+            <FaGithub size={34} />
           </a>
-          <a>
+          <a href="https://x.com/JunaitP" target="_blank">
             <FaXTwitter size={34} />
           </a>
-          <a>
-           <FaLinkedin size={34} />
+          <a href="https://www.linkedin.com/in/polok-ahmed" target="_blank">
+            <FaLinkedin size={34} />
           </a>
         </div>
       </nav>

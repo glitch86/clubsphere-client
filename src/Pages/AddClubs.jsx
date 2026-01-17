@@ -9,12 +9,9 @@ const AddClubs = () => {
   const { user } = use(AuthContext);
   // console.log(user.email);
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
 
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const handleAddClub = async (data) => {
     const newClub = {
@@ -24,14 +21,14 @@ const AddClubs = () => {
       membershipFee: data?.fee,
       bannerImage: data?.url,
       managerEmail: data?.addedBy,
-      description: data?.description
+      description: data?.description,
     };
 
     // console.log(newClub);
 
-    const {data:clubData} = await axiosSecure.post("/clubs/add", newClub)
-    console.log(clubData)
-    toast.success("Queued for approval.")
+    const { data: clubData } = await axiosSecure.post("/clubs/add", newClub);
+    console.log(clubData);
+    toast.success("Queued for approval.");
 
     navigate("/clubs");
   };
@@ -70,6 +67,7 @@ const AddClubs = () => {
             <option value="Tech">Tech</option>
             <option value="Books">Books</option>
             <option value="Art">Art</option>
+            <option value="Sports">Sports</option>
             <option value="Gaming">Gaming</option>
           </select>
         </div>
