@@ -33,6 +33,13 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_ID
 VITE_FIREBASE_APP_ID=your_app_ID
 ```
 
+Run the application:
+
+```bash
+npm run dev
+```
+
+
 Author
 Site: https://polokahmed-portfolio.netlify.app
 LinkedIn: https://www.linkedin.com/in/polok-ahmed
