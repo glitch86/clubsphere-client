@@ -33,13 +33,13 @@ const TrendingCat = () => {
         <p>The most active communities right now.</p>
       </div>
       {/* card contaner  */}
-      <div className="grid grid-flow-col auto-cols-[300px] overflow-x-auto gap-3 w-fit mx-auto">
+      <div className="grid grid-flow-col auto-cols-[300px] overflow-x-auto gap-3 w-fit mx-auto ">
         {/* card  */}
 
         {categories.map((category, index) => {
           const Icon = category.icon;
           return (
-            <div key={index} className="w-[300px] bg-neutral p-9 rounded-2xl">
+            <div key={index} className="w-[300px] bg-neutral p-9 rounded-2xl text-white">
               {/* icon */}
               <div className="bg-primary p-4 w-fit rounded-2xl">
                 <Icon></Icon>

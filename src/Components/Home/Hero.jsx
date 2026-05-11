@@ -23,7 +23,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative -mt-24 mb-14 bg-[url('/homeBanner.png')] bg-cover bg-center h-screen flex flex-col justify-center">
+    <div className="relative -mt-28 mb-14 bg-[url('/homeBanner.png')] bg-cover bg-center h-screen flex flex-col justify-center">
       <div className="absolute bg-zinc-900 h-full w-full opacity-20 "></div>
       <div className=" min-h-2/3 flex flex-col justify-center gap-9 items-center z-1">
         <div>
