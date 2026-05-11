@@ -47,7 +47,7 @@ body {
 }
 
 .heading {
-  @apply font-semibold text-2xl;
+  @apply font-semibold text-4xl;
 }
 
 .s-goth {

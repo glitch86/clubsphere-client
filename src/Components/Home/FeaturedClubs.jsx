@@ -25,8 +25,14 @@ const FeaturedClubs = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
   return (
-    <div className="">
+    <div className="container mx-auto">
+      <div>
       <h1 className="heading">Featured Clubs</h1>
+      <p className="bg-primary w-fit px-2 py-1 rounded-full">
+        Popular among users
+      </p>
+
+      </div>
       <motion.div className="flex md:grid grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto py-10 h-full">
         {orderedClubs.map((club) => (
           <FeaturedCards key={club._id} club={club}></FeaturedCards>
