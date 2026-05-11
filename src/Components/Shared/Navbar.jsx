@@ -99,11 +99,11 @@ const NavBar = () => {
 
   return (
     <div
-      className={`z-100 bg-base-200 rounded-xl my-5 sticky top-0 shadow-sm transform transition-transform duration-300 ${
+      className={` container mx-auto z-100 bg-base-200 rounded-xl my-5 sticky top-0 shadow-sm transform transition-transform duration-300 ${
         hide ? "-translate-y-full" : "translate-y-1"
       }`}
     >
-      <div className="navbar container mx-auto">
+      <div className="navbar">
         <div className="navbar-start lg:w-fit lg:mx-6">
           <div className="drawer w-fit mr-2 lg:hidden">
             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
@@ -197,7 +197,7 @@ const NavBar = () => {
           )}
           <Link to={"/login"} className={`btns ${user ? "hidden!" : ""}`}>
             <div className="flex  gap-2 items-center">
-              <span>Login</span>
+              <span>Join For Free</span>
               <HiOutlineLogin />
             </div>
           </Link>

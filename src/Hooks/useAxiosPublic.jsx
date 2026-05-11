@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
  const axiosPublic = axios.create({
-    // baseURL: "https://clubsphere-server.vercel.app",
-  baseURL: "http://localhost:3000",
+    baseURL: "https://clubsphere-server.vercel.app",
+  // baseURL: "http://localhost:3000",
 
   });
 const useAxiosPublic = () => {
